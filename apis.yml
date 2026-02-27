@@ -1,0 +1,43 @@
+name: Reuters
+description: Global news organization providing breaking news, business, financial, and multimedia content
+image: https://www.reuters.com/pf/resources/images/reuters/logo.png
+url: https://www.reuters.com
+created: '2024'
+modified: '2024'
+specificationVersion: '0.16'
+apis:
+- name: Reuters Connect API
+  description: Professional content delivery platform providing news, images, video and data
+  image: https://www.reuters.com/pf/resources/images/reuters/logo.png
+  humanURL: https://www.reutersconnect.com
+  baseURL: https://api.reutersconnect.com
+  tags:
+  - News
+  - Media
+  - Video
+  - Images
+  - Journalism
+  properties:
+  - type: Documentation
+    url: https://developers.reutersconnect.com/docs
+  - type: OpenAPI
+    url: https://api.reutersconnect.com/openapi.json
+  - type: Authentication
+    url: https://developers.reutersconnect.com/authentication
+  contact:
+  - FN: Reuters API Support
+    email:
+    - email protected
+    url: https://www.reutersconnect.com/contact
+maintainers:
+- FN: Reuters
+  email:
+  - email protected
+  url: https://www.reuters.com/info-pages/contact-us/
+tags:
+- News
+- Media
+- Journalism
+- Finance
+- Business
+- Wire Service
