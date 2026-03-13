@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kinlane/reuters/json-schema/reuters-rendition-schema.json",
+  "title": "Reuters Connect Rendition",
+  "description": "A specific rendition or format of a media item from the Reuters Connect API. Renditions represent different sizes, resolutions, or formats of the same content available for download. Images may have thumbnail, preview, and full-size renditions, while video may have different quality levels and formats.",
+  "type": "object",
+  "required": [
+    "name",
+    "href",
+    "mimetype"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name or label of the rendition indicating its purpose or size class.",
+      "examples": [
+        "thumbnail",
+        "preview",
+        "baseImage",
+        "hires",
+        "videoFile",
+        "webReadyVideo"
+      ]
+    },
+    "href": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to download this rendition of the content. Requires a valid authentication token to access."
+    },
+    "mimetype": {
+      "type": "string",
+      "description": "The MIME type of the rendition file, indicating the file format.",
+      "examples": [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "video/mp4",
+        "video/quicktime",
+        "application/pdf",
+        "text/html"
+      ]
+    },
+    "width": {
+      "type": "integer",
+      "description": "The width of the rendition in pixels. Applicable to image and video renditions.",
+      "minimum": 1,
+      "examples": [
+        150,
+        640,
+        1920,
+        3000
+      ]
+    },
+    "height": {
+      "type": "integer",
+      "description": "The height of the rendition in pixels. Applicable to image and video renditions.",
+      "minimum": 1,
+      "examples": [
+        100,
+        480,
+        1080,
+        2000
+      ]
+    },
+    "sizeinbytes": {
+      "type": "integer",
+      "description": "The file size of the rendition in bytes.",
+      "minimum": 0,
+      "examples": [
+        15360,
+        102400,
+        5242880
+      ]
+    },
+    "duration": {
+      "type": "number",
+      "description": "The duration of the rendition in seconds. Applicable to video and audio renditions.",
+      "minimum": 0
+    },
+    "format": {
+      "type": "string",
+      "description": "The specific format or codec of the rendition, providing additional detail beyond the MIME type.",
+      "examples": [
+        "JPEG",
+        "PNG",
+        "H.264",
+        "MPEG-4"
+      ]
+    }
+  }
+}

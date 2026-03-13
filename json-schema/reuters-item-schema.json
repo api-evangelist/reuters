@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kinlane/reuters/json-schema/reuters-item-schema.json",
+  "title": "Reuters Connect Content Item",
+  "description": "A content item from the Reuters Connect API representing a piece of editorial content such as a news story, image, video clip, or graphic. Items follow the IPTC NewsML-G2 standard and may be Simple News Items (SNI), News Event Packages (NEP), or Super News Event Packages (SNEP) for composite content.",
+  "type": "object",
+  "required": [
+    "id",
+    "headline",
+    "dateCreated",
+    "mediaType"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier for the item, typically in tag URI format (e.g., tag:reuters.com,2025:newsml_L1N3KT0AB:1). Includes the version number as a suffix.",
+      "examples": [
+        "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+      ]
+    },
+    "guid": {
+      "type": "string",
+      "description": "A globally unique identifier for the item regardless of version. This identifier remains stable across revisions of the same content.",
+      "examples": [
+        "tag:reuters.com,2025:newsml_L1N3KT0AB"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "The version number of this item revision. Incremented each time the item is updated.",
+      "examples": [
+        "1",
+        "2"
+      ]
+    },
+    "headline": {
+      "type": "string",
+      "description": "The headline or title of the content item. For text stories, this is the story headline. For images and video, this is the caption title.",
+      "maxLength": 500
+    },
+    "slug": {
+      "type": "string",
+      "description": "A short keyword slug summarizing the item topic, typically used for internal categorization and routing.",
+      "examples": [
+        "USA-ELECTION",
+        "MARKETS-STOCKS",
+        "SOCCER-CHAMPIONS"
+      ]
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the item was originally created, in ISO 8601 format."
+    },
+    "dateModified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the item was last modified, in ISO 8601 format."
+    },
+    "channel": {
+      "type": "string",
+      "description": "The alias of the channel this item belongs to. Channels represent curated feeds of editorial content."
+    },
+    "mediaType": {
+      "type": "string",
+      "description": "The media type classification of the content item.",
+      "enum": [
+        "TEXT",
+        "PICTURE",
+        "VIDEO",
+        "GRAPHIC",
+        "COMPOSITE"
+      ]
+    },
+    "urgency": {
+      "type": "integer",
+      "description": "The editorial urgency priority of the item, following the IPTC urgency scale where 1 is the most urgent and 9 is the least urgent.",
+      "minimum": 1,
+      "maximum": 9
+    },
+    "byline": {
+      "type": "string",
+      "description": "The author or creator attribution for the item. May include the reporter name, photographer name, or agency credit."
+    },
+    "dateline": {
+      "type": "string",
+      "description": "The location and date line for the item, typically formatted as CITY, Month Day (e.g., NEW YORK, March 4).",
+      "examples": [
+        "NEW YORK, March 4",
+        "LONDON, Feb 28"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "description": "The ISO 639-1 language code of the content.",
+      "examples": [
+        "en",
+        "fr",
+        "de",
+        "es"
+      ]
+    },
+    "body": {
+      "type": "string",
+      "description": "The full text body of the content item. For text items, this contains the story body which may include XHTML markup. For media items, this may contain a caption or extended description."
+    },
+    "subjects": {
+      "type": "array",
+      "description": "Subject classification codes assigned to the item, following the IPTC NewsCodes taxonomy for consistent categorization.",
+      "items": {
+        "$ref": "#/$defs/subject"
+      }
+    },
+    "renditions": {
+      "type": "array",
+      "description": "Available renditions of the content. For images and video, this includes different sizes, resolutions, and formats available for download.",
+      "items": {
+        "$ref": "#/$defs/rendition"
+      }
+    },
+    "associations": {
+      "type": "array",
+      "description": "Related items associated with this content, such as images accompanying a text story, video related to an event, or other cross-referenced editorial content.",
+      "items": {
+        "$ref": "#/$defs/association"
+      }
+    }
+  },
+  "$defs": {
+    "subject": {
+      "type": "object",
+      "description": "A subject classification code from the IPTC NewsCodes taxonomy.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The IPTC subject code identifier.",
+          "examples": [
+            "04000000",
+            "11000000"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "The human-readable name of the subject category.",
+          "examples": [
+            "economy, business and finance",
+            "politics"
+          ]
+        }
+      }
+    },
+    "rendition": {
+      "type": "object",
+      "description": "A specific rendition or format of a media item available for download.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name or label of the rendition indicating its purpose or size.",
+          "examples": [
+            "thumbnail",
+            "preview",
+            "baseImage",
+            "videoFile"
+          ]
+        },
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL to download this rendition of the content."
+        },
+        "mimetype": {
+          "type": "string",
+          "description": "The MIME type of the rendition file.",
+          "examples": [
+            "image/jpeg",
+            "video/mp4",
+            "application/pdf"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "description": "The width of the rendition in pixels (for images and video)."
+        },
+        "height": {
+          "type": "integer",
+          "description": "The height of the rendition in pixels (for images and video)."
+        },
+        "sizeinbytes": {
+          "type": "integer",
+          "description": "The file size of the rendition in bytes."
+        }
+      }
+    },
+    "association": {
+      "type": "object",
+      "description": "A reference to an associated content item.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the associated item."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of association describing the relationship between items.",
+          "examples": [
+            "companion",
+            "related",
+            "seeAlso"
+          ]
+        },
+        "headline": {
+          "type": "string",
+          "description": "The headline of the associated item."
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "The media type of the associated item."
+        }
+      }
+    }
+  }
+}

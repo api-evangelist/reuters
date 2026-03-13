@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kinlane/reuters/json-schema/reuters-channel-schema.json",
+  "title": "Reuters Connect Channel",
+  "description": "A content channel from the Reuters Connect API representing a curated feed of editorial content. Channels are organized by category (text, images, video, graphics) and subscription level, providing access to content from Reuters and partner sources.",
+  "type": "object",
+  "required": [
+    "alias",
+    "category"
+  ],
+  "properties": {
+    "alias": {
+      "type": "string",
+      "description": "The unique alias identifier for the channel, used as a reference in API calls to retrieve items from this channel.",
+      "examples": [
+        "OLDEN",
+        "RTRS_PIX",
+        "RTRS_VID"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "A human-readable description of the channel content, explaining the editorial focus and type of content delivered."
+    },
+    "category": {
+      "type": "string",
+      "description": "The content category of the channel, indicating the primary type of content delivered.",
+      "enum": [
+        "TXT",
+        "PIX",
+        "VID",
+        "GFX",
+        "CMP"
+      ]
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the channel was last updated with new content, in ISO 8601 format."
+    }
+  }
+}

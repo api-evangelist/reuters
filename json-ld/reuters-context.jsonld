@@ -1,0 +1,130 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "reuters": "https://ns.reuters.com/connect/",
+    "iptc": "http://iptc.org/std/nar/2006-10-01/",
+    "nitf": "http://iptc.org/std/NITF/2006-10-18/",
+    "rnews": "http://iptc.org/std/rNews/2011-10-07#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+
+    "id": "@id",
+    "type": "@type",
+
+    "Item": "rnews:Article",
+    "TextItem": "schema:NewsArticle",
+    "ImageItem": "schema:ImageObject",
+    "VideoItem": "schema:VideoObject",
+    "GraphicItem": "schema:ImageObject",
+    "CompositeItem": "schema:CreativeWork",
+    "Channel": "reuters:Channel",
+    "Rendition": "schema:MediaObject",
+    "Subject": "reuters:Subject",
+    "Association": "reuters:Association",
+    "SearchResult": "schema:ItemList",
+
+    "guid": {
+      "@id": "dcterms:identifier",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "schema:version",
+      "@type": "xsd:string"
+    },
+    "headline": "schema:headline",
+    "slug": "reuters:slug",
+    "dateCreated": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "dateModified": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "lastUpdated": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "mediaType": {
+      "@id": "schema:encodingFormat",
+      "@type": "xsd:string"
+    },
+    "urgency": {
+      "@id": "reuters:urgency",
+      "@type": "xsd:integer"
+    },
+    "byline": "schema:author",
+    "dateline": "reuters:dateline",
+    "language": "schema:inLanguage",
+    "body": "schema:articleBody",
+    "description": "schema:description",
+    "name": "schema:name",
+
+    "channel": {
+      "@id": "reuters:channel",
+      "@type": "@id"
+    },
+    "alias": "reuters:channelAlias",
+    "category": "reuters:channelCategory",
+
+    "subjects": {
+      "@id": "schema:about",
+      "@container": "@set"
+    },
+    "code": "reuters:subjectCode",
+
+    "renditions": {
+      "@id": "schema:encoding",
+      "@container": "@set"
+    },
+    "href": {
+      "@id": "schema:contentUrl",
+      "@type": "@id"
+    },
+    "mimetype": "schema:encodingFormat",
+    "width": {
+      "@id": "schema:width",
+      "@type": "xsd:integer"
+    },
+    "height": {
+      "@id": "schema:height",
+      "@type": "xsd:integer"
+    },
+    "sizeinbytes": {
+      "@id": "schema:contentSize",
+      "@type": "xsd:integer"
+    },
+    "duration": {
+      "@id": "schema:duration",
+      "@type": "xsd:decimal"
+    },
+    "format": "reuters:format",
+
+    "associations": {
+      "@id": "schema:associatedMedia",
+      "@container": "@set"
+    },
+
+    "results": {
+      "@id": "schema:itemListElement",
+      "@container": "@list"
+    },
+    "totalResults": {
+      "@id": "schema:numberOfItems",
+      "@type": "xsd:integer"
+    },
+    "query": "reuters:searchQuery",
+
+    "authToken": "reuters:authToken",
+
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    }
+  }
+}

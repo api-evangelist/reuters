@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kinlane/reuters/json-schema/reuters-search-result-schema.json",
+  "title": "Reuters Connect Search Result",
+  "description": "A search response from the Reuters Connect API containing a list of content items matching the search criteria, along with metadata about the total result count and the query that was executed.",
+  "type": "object",
+  "required": [
+    "results",
+    "totalResults"
+  ],
+  "properties": {
+    "results": {
+      "type": "array",
+      "description": "Array of content item summaries matching the search criteria.",
+      "items": {
+        "$ref": "#/$defs/itemSummary"
+      }
+    },
+    "totalResults": {
+      "type": "integer",
+      "description": "Total number of items matching the search criteria across all pages.",
+      "minimum": 0
+    },
+    "query": {
+      "type": "string",
+      "description": "The search query string that was executed."
+    }
+  },
+  "$defs": {
+    "itemSummary": {
+      "type": "object",
+      "description": "A summary representation of a content item containing key metadata for display in search results without the full content body.",
+      "required": [
+        "id",
+        "headline"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the item, typically in tag URI format.",
+          "examples": [
+            "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+          ]
+        },
+        "guid": {
+          "type": "string",
+          "description": "A globally unique identifier for the item regardless of version."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version number of this item revision."
+        },
+        "headline": {
+          "type": "string",
+          "description": "The headline or title of the content item."
+        },
+        "dateCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the item was originally created."
+        },
+        "dateModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the item was last modified."
+        },
+        "channel": {
+          "type": "string",
+          "description": "The alias of the channel this item belongs to."
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "The media type of the content.",
+          "enum": [
+            "TEXT",
+            "PICTURE",
+            "VIDEO",
+            "GRAPHIC",
+            "COMPOSITE"
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "description": "A short keyword slug summarizing the item topic."
+        }
+      }
+    }
+  }
+}
