@@ -7,11 +7,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - News
-  - Media
-  - Journalism
-  - Finance
   - Business
+  - Finance
+  - Journalism
+  - Media
+  - News
   - Wire Service
 url: >-
   https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/apis.yml
@@ -27,10 +27,10 @@ apis:
       powering over 100 customer applications and internal systems.
     humanURL: https://www.reutersconnect.com
     tags:
-      - News
-      - Media
       - Content Delivery
       - Images
+      - Media
+      - News
       - Video
     properties:
       - type: Documentation
