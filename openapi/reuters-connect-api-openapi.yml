@@ -54,7 +54,7 @@ paths:
   /login:
     post:
       operationId: login
-      summary: Authenticate and obtain authorization token
+      summary: Reuters Authenticate and obtain authorization token
       description: >-
         Authenticates with the Reuters Connect service using username and
         password credentials. Returns an authorization token that must be
@@ -86,7 +86,7 @@ paths:
   /channels:
     get:
       operationId: listChannels
-      summary: List available content channels
+      summary: Reuters List available content channels
       description: >-
         Retrieves all content channels available within your subscription.
         Channels can be filtered by category to return only specific content
@@ -115,7 +115,7 @@ paths:
   /items:
     get:
       operationId: listItems
-      summary: List items on a channel
+      summary: Reuters List items on a channel
       description: >-
         Retrieves a list of content items available on a specific channel.
         Returns the most recent items on the channel, including metadata
@@ -149,7 +149,7 @@ paths:
   /item:
     get:
       operationId: getItem
-      summary: Retrieve a specific content item
+      summary: Reuters Retrieve a specific content item
       description: >-
         Retrieves the full details of a specific content item by its unique
         identifier. The response includes the complete item metadata,
@@ -180,7 +180,7 @@ paths:
   /search:
     get:
       operationId: searchItems
-      summary: Search for content items
+      summary: Reuters Search for content items
       description: >-
         Searches for content items matching specified criteria across one or
         more channels. Supports keyword queries against item headlines and
