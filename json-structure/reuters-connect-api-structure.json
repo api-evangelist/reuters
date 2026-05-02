@@ -1,0 +1,50 @@
+{
+  "title": "Reuters Connect API Structure",
+  "description": "JSON structure documenting the key entities, relationships, and data organization of the Reuters Connect content delivery API.",
+  "version": "1.0.0",
+  "entities": {
+    "Channel": {
+      "description": "A curated content feed organized by category",
+      "fields": ["alias", "description", "category", "lastUpdated"],
+      "categories": ["TXT", "PIX", "VID", "GFX", "CMP"]
+    },
+    "Item": {
+      "description": "A piece of editorial content (story, image, video, graphic)",
+      "fields": ["id", "guid", "version", "headline", "dateCreated", "dateModified", "channel", "mediaType", "urgency", "byline", "dateline", "language", "body", "subjects", "renditions", "associations"],
+      "mediaTypes": ["TEXT", "PICTURE", "VIDEO", "GRAPHIC", "COMPOSITE"]
+    },
+    "Rendition": {
+      "description": "A specific format/size of a media item available for download",
+      "fields": ["name", "href", "mimetype", "width", "height", "sizeinbytes"]
+    },
+    "Subject": {
+      "description": "An IPTC NewsCodes subject classification",
+      "fields": ["code", "name"]
+    },
+    "Association": {
+      "description": "A reference to a related piece of content",
+      "fields": ["id", "type", "headline", "mediaType"]
+    }
+  },
+  "endpoints": {
+    "authentication": {
+      "login": "POST /login"
+    },
+    "channels": {
+      "list": "GET /channels"
+    },
+    "items": {
+      "list": "GET /items",
+      "get": "GET /item"
+    },
+    "search": {
+      "query": "GET /search"
+    }
+  },
+  "servers": {
+    "content": "https://rmb.reuters.com/rmd/rest/xml",
+    "authentication": "https://commerce.reuters.com/rmd/rest/xml"
+  },
+  "contentFormat": "XML",
+  "authentication": "Token (query parameter)"
+}

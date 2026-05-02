@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://commerce.reuters.com/rmd/rest/xml/login?username=yourusername&password=yourpassword",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/xml",
+    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><authToken>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.abc123def456</authToken>"
+  }
+}

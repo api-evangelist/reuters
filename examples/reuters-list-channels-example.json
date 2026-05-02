@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://rmb.reuters.com/rmd/rest/xml/channels?token=YOUR_TOKEN&channelCategory=TXT",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/xml",
+    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><channelList><channel><alias>OLDEN</alias><description>Reuters English News - Top Stories</description><category>TXT</category><lastUpdated>2026-05-02T12:00:00Z</lastUpdated></channel><channel><alias>RTRS_INT</alias><description>Reuters International News</description><category>TXT</category><lastUpdated>2026-05-02T11:58:32Z</lastUpdated></channel></channelList>"
+  }
+}

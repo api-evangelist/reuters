@@ -1,0 +1,76 @@
+extends: ["spectral:oas"]
+
+rules:
+  reuters-operation-id-camel-case:
+    description: Operation IDs should use camelCase following Reuters Connect API convention.
+    message: "Operation ID '{{value}}' should use camelCase (e.g., listChannels, getItem, searchItems)."
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  reuters-summary-title-case:
+    description: All operation summaries must use Title Case.
+    message: "Summary '{{value}}' should use Title Case."
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  reuters-tags-defined:
+    description: All operations must have at least one tag.
+    message: "Operation is missing tags."
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  reuters-token-auth:
+    description: >-
+      The Reuters Connect API uses token-based authentication via query parameter.
+      All content endpoints must reference the tokenAuth security scheme.
+    message: "Content endpoint should require token authentication."
+    severity: warn
+    given: "$.paths[?(@property != '/login')][*]"
+    then:
+      field: security
+      function: truthy
+
+  reuters-xml-response-content:
+    description: Reuters Connect API responses use XML content type.
+    message: "Reuters Connect API responses should use application/xml content type."
+    severity: info
+    given: "$.paths[*][*].responses[*].content"
+    then:
+      field: "application/xml"
+      function: truthy
+
+  reuters-error-responses:
+    description: All operations should define 401 and 403 error responses.
+    message: "Operation should define 401 Unauthorized response for token-based auth."
+    severity: warn
+    given: "$.paths[*][*].responses"
+    then:
+      field: "401"
+      function: truthy
+
+  reuters-channel-param-required:
+    description: Item list endpoints require a channel parameter.
+    message: "The /items endpoint requires a channel query parameter."
+    severity: info
+    given: "$.paths['/items'].get.parameters"
+    then:
+      function: truthy
+
+  reuters-search-query-param:
+    description: Search endpoint requires a query (q) parameter.
+    message: "The /search endpoint requires a 'q' query parameter."
+    severity: error
+    given: "$.paths['/search'].get.parameters"
+    then:
+      function: truthy

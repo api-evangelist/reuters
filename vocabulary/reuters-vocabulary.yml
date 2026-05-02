@@ -1,0 +1,132 @@
+name: Reuters Vocabulary
+description: >-
+  Domain vocabulary for the Reuters news wire service and Reuters Connect API,
+  covering editorial content concepts, channel types, media classifications,
+  and content standards used in the news industry.
+version: 1.0.0
+created: '2026-05-02'
+modified: '2026-05-02'
+
+terms:
+  - term: Reuters Connect
+    definition: >-
+      The professional content delivery platform providing REST API access to
+      Reuters and partner editorial content. Powers over 100 customer applications
+      and internal systems for news organizations worldwide.
+    tags:
+      - Platform
+      - Core Concept
+
+  - term: Channel
+    definition: >-
+      A curated feed of editorial content organized by category and subscription
+      level. Channels are identified by alias codes (e.g., OLDEN) and categorized
+      as TXT (text), PIX (images), VID (video), GFX (graphics), or CMP (composite).
+    tags:
+      - Core Concept
+      - Content Organization
+
+  - term: Item
+    definition: >-
+      An individual piece of editorial content in the Reuters system. Items may
+      be Simple News Items (SNI), News Event Packages (NEP), Super News Event
+      Packages (SNEP), images, videos, or graphics. Each item has a unique
+      identifier, version, and set of metadata.
+    tags:
+      - Core Concept
+      - Content
+
+  - term: Rendition
+    definition: >-
+      A specific format or size variant of a media item (image or video) available
+      for download. Examples include thumbnail, preview, baseImage, and videoFile.
+      Each rendition has its own URL, MIME type, and dimensions.
+    tags:
+      - Core Concept
+      - Media
+
+  - term: Headline
+    definition: >-
+      The title of a news item summarizing its content. In the Reuters API,
+      headlines are searchable using the field:value query syntax
+      (e.g., headline:election).
+    tags:
+      - Content
+      - Editorial
+
+  - term: GUID
+    definition: >-
+      Globally Unique Identifier — a permanent, version-independent identifier
+      for a Reuters content item. Unlike the versioned item ID, the GUID
+      remains constant across item updates and revisions.
+    tags:
+      - Identifiers
+      - Technical
+
+  - term: Urgency
+    definition: >-
+      An editorial priority score (1-9) assigned to news items, where 1 is the
+      highest priority (breaking news). Used by news organizations to prioritize
+      content delivery and display.
+    tags:
+      - Editorial
+      - Metadata
+
+  - term: IPTC NewsCodes
+    definition: >-
+      A standardized taxonomy of subject classification codes maintained by the
+      International Press Telecommunications Council (IPTC). Reuters items are
+      tagged with IPTC subject codes to categorize editorial content by topic.
+    tags:
+      - Standards
+      - Classification
+
+  - term: Byline
+    definition: >-
+      The author attribution line for a news item, identifying the journalist
+      or photographer who created the content.
+    tags:
+      - Editorial
+      - Metadata
+
+  - term: Dateline
+    definition: >-
+      A line of text at the beginning of a news story indicating the location
+      and date where the story originated (e.g., "LONDON, May 2 (Reuters)").
+    tags:
+      - Editorial
+      - Metadata
+
+  - term: Wire Service
+    definition: >-
+      A news agency that distributes syndicated news copy to subscribing
+      organizations (newspapers, broadcasters, websites). Reuters is the world's
+      largest international wire service.
+    tags:
+      - Industry
+      - Business Model
+
+  - term: SNI
+    definition: >-
+      Simple News Item — a standalone piece of Reuters content such as a news
+      story, image, or video clip.
+    tags:
+      - Content Types
+      - Technical
+
+  - term: NEP
+    definition: >-
+      News Event Package — a Reuters content package that groups related items
+      together around a specific news event.
+    tags:
+      - Content Types
+      - Technical
+
+  - term: Authorization Token
+    definition: >-
+      A session credential obtained from the Reuters Connect authentication
+      endpoint (/login) that must be included as a query parameter in all
+      subsequent content API requests. Should be cached and renewed periodically.
+    tags:
+      - Authentication
+      - Security

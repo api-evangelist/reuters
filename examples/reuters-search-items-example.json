@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://rmb.reuters.com/rmd/rest/xml/search?token=YOUR_TOKEN&q=headline:election&channel=OLDEN&limit=10&sort=date",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/xml",
+    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><searchResults><totalResults>247</totalResults><query>headline:election</query><results><item><id>tag:reuters.com,2026:newsml_L1N3XY0AB:1</id><guid>newsml_L1N3XY0AB</guid><version>1</version><headline>Election results show narrow margins in key districts</headline><dateCreated>2026-05-02T10:30:00Z</dateCreated><dateModified>2026-05-02T11:15:00Z</dateModified><channel>OLDEN</channel><mediaType>TEXT</mediaType><slug>USA-ELECTION</slug></item></results></searchResults>"
+  }
+}
