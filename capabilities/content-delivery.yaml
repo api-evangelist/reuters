@@ -1,147 +1,247 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Reuters Content Delivery"
-  description: >-
-    Unified workflow capability for accessing and searching Reuters editorial
-    content through the Reuters Connect API. Enables media publishers, news
-    aggregators, and content platforms to discover channels, browse items,
-    retrieve full content with renditions, and search across the Reuters corpus.
+  label: Reuters Content Delivery
+  description: Unified workflow capability for accessing and searching Reuters editorial content through the Reuters Connect
+    API. Enables media publishers, news aggregators, and content platforms to discover channels, browse items, retrieve full
+    content with renditions, and search across the Reuters corpus.
   tags:
-    - Reuters
-    - News
-    - Content Delivery
-    - Media
-    - Search
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - Reuters
+  - News
+  - Content Delivery
+  - Media
+  - Search
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      REUTERS_TOKEN: REUTERS_TOKEN
-
+- namespace: env
+  keys:
+    REUTERS_TOKEN: REUTERS_TOKEN
 capability:
   consumes:
-    - import: reuters
-      location: ./shared/reuters-connect.yaml
-
+  - type: http
+    namespace: reuters
+    baseUri: https://rmb.reuters.com/rmd/rest/xml
+    description: Reuters Connect content delivery and search API.
+    authentication:
+      type: apikey
+      key: token
+      value: '{{REUTERS_TOKEN}}'
+      placement: query
+    resources:
+    - name: channels
+      path: /channels
+      description: List available content channels by category.
+      operations:
+      - name: list-channels
+        method: GET
+        description: List all content channels within the subscription.
+        inputParameters:
+        - name: channelCategory
+          in: query
+          type: string
+          required: false
+          description: 'Filter by category: TXT, PIX, VID, GFX, CMP.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: items
+      path: /items
+      description: List content items from a specific channel.
+      operations:
+      - name: list-items
+        method: GET
+        description: List the most recent items on a content channel.
+        inputParameters:
+        - name: channel
+          in: query
+          type: string
+          required: true
+          description: Channel alias to retrieve items from.
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum number of items to return.
+        - name: mediaType
+          in: query
+          type: string
+          required: false
+          description: 'Filter by media type: TEXT, PICTURE, VIDEO, GRAPHIC, COMPOSITE.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: item
+      path: /item
+      description: Retrieve a specific content item by ID.
+      operations:
+      - name: get-item
+        method: GET
+        description: Retrieve the full details of a specific content item.
+        inputParameters:
+        - name: id
+          in: query
+          type: string
+          required: true
+          description: The unique identifier of the content item.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: search
+      path: /search
+      description: Search for content items using keyword queries.
+      operations:
+      - name: search-items
+        method: GET
+        description: Search for content items matching specified criteria.
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: Search query (supports field:value syntax).
+        - name: channel
+          in: query
+          type: string
+          required: false
+          description: Restrict search to a specific channel.
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum number of results to return.
+        - name: sort
+          in: query
+          type: string
+          required: false
+          description: 'Sort order: date or relevance.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: reuters-content-api
-      description: "Unified REST API for Reuters content discovery and delivery."
-      resources:
-        - path: /v1/channels
-          name: channels
-          description: "Discover and browse Reuters content channels."
-          operations:
-            - method: GET
-              name: list-channels
-              description: "List available Reuters content channels, optionally filtered by category."
-              call: "reuters.list-channels"
-              with:
-                channelCategory: "rest.channelCategory"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/items
-          name: items
-          description: "Browse content items from Reuters channels."
-          operations:
-            - method: GET
-              name: list-items
-              description: "List the most recent items from a Reuters channel."
-              call: "reuters.list-items"
-              with:
-                channel: "rest.channel"
-                limit: "rest.limit"
-                mediaType: "rest.mediaType"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/items/{id}
-          name: item-by-id
-          description: "Retrieve specific Reuters content items."
-          operations:
-            - method: GET
-              name: get-item
-              description: "Retrieve the full details and renditions of a content item."
-              call: "reuters.get-item"
-              with:
-                id: "rest.id"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/search
-          name: search
-          description: "Search Reuters editorial content."
-          operations:
-            - method: GET
-              name: search-items
-              description: "Search Reuters content by keyword, channel, and media type."
-              call: "reuters.search-items"
-              with:
-                q: "rest.q"
-                channel: "rest.channel"
-                limit: "rest.limit"
-                sort: "rest.sort"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: reuters-content-mcp
-      transport: http
-      description: "MCP server for AI-assisted Reuters content discovery and retrieval."
-      tools:
-        - name: list-channels
-          description: "List available Reuters content channels. Filter by category: TXT (text), PIX (images), VID (video), GFX (graphics)."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "reuters.list-channels"
-          with:
-            channelCategory: "tools.channelCategory"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-items
-          description: "List the most recent editorial items from a Reuters content channel."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "reuters.list-items"
-          with:
-            channel: "tools.channel"
-            limit: "tools.limit"
-            mediaType: "tools.mediaType"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-item
-          description: "Retrieve the full content of a Reuters item including body, byline, subjects, and available media renditions."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "reuters.get-item"
-          with:
-            id: "tools.id"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: search-items
-          description: "Search Reuters editorial content by keyword. Supports field-specific queries like headline:election or body:markets."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "reuters.search-items"
-          with:
-            q: "tools.q"
-            channel: "tools.channel"
-            limit: "tools.limit"
-            sort: "tools.sort"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: reuters-content-api
+    description: Unified REST API for Reuters content discovery and delivery.
+    resources:
+    - path: /v1/channels
+      name: channels
+      description: Discover and browse Reuters content channels.
+      operations:
+      - method: GET
+        name: list-channels
+        description: List available Reuters content channels, optionally filtered by category.
+        call: reuters.list-channels
+        with:
+          channelCategory: rest.channelCategory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/items
+      name: items
+      description: Browse content items from Reuters channels.
+      operations:
+      - method: GET
+        name: list-items
+        description: List the most recent items from a Reuters channel.
+        call: reuters.list-items
+        with:
+          channel: rest.channel
+          limit: rest.limit
+          mediaType: rest.mediaType
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/items/{id}
+      name: item-by-id
+      description: Retrieve specific Reuters content items.
+      operations:
+      - method: GET
+        name: get-item
+        description: Retrieve the full details and renditions of a content item.
+        call: reuters.get-item
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/search
+      name: search
+      description: Search Reuters editorial content.
+      operations:
+      - method: GET
+        name: search-items
+        description: Search Reuters content by keyword, channel, and media type.
+        call: reuters.search-items
+        with:
+          q: rest.q
+          channel: rest.channel
+          limit: rest.limit
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: reuters-content-mcp
+    transport: http
+    description: MCP server for AI-assisted Reuters content discovery and retrieval.
+    tools:
+    - name: list-channels
+      description: 'List available Reuters content channels. Filter by category: TXT (text), PIX (images), VID (video), GFX
+        (graphics).'
+      hints:
+        readOnly: true
+        openWorld: true
+      call: reuters.list-channels
+      with:
+        channelCategory: tools.channelCategory
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-items
+      description: List the most recent editorial items from a Reuters content channel.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: reuters.list-items
+      with:
+        channel: tools.channel
+        limit: tools.limit
+        mediaType: tools.mediaType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-item
+      description: Retrieve the full content of a Reuters item including body, byline, subjects, and available media renditions.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: reuters.get-item
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-items
+      description: Search Reuters editorial content by keyword. Supports field-specific queries like headline:election or
+        body:markets.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: reuters.search-items
+      with:
+        q: tools.q
+        channel: tools.channel
+        limit: tools.limit
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
