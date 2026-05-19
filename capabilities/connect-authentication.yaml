@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Reuters Connect API — Authentication
+  description: 'Reuters Connect API — Authentication. 1 operations. Lead operation: Authenticate and Obtain Authorization
+    Token. Self-contained Naftiko capability covering one Reuters business surface.'
+  tags:
+  - Reuters
+  - Authentication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REUTERS_API_KEY: REUTERS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: connect-authentication
+    baseUri: https://rmb.reuters.com/rmd/rest/xml
+    description: Reuters Connect API — Authentication business capability. Self-contained, no shared references.
+    resources:
+    - name: login
+      path: /login
+      operations:
+      - name: login
+        method: POST
+        description: Authenticate and Obtain Authorization Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: token
+      value: '{{env.REUTERS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: connect-authentication-rest
+    port: 8080
+    description: REST adapter for Reuters Connect API — Authentication. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/login
+      name: login
+      description: REST surface for login.
+      operations:
+      - method: POST
+        name: login
+        description: Authenticate and Obtain Authorization Token
+        call: connect-authentication.login
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: connect-authentication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Reuters Connect API — Authentication. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: authenticate-and-obtain-authorization-token
+      description: Authenticate and Obtain Authorization Token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: connect-authentication.login
+      outputParameters:
+      - type: object
+        mapping: $.
