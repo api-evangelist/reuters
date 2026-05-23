@@ -60,6 +60,9 @@ common:
   url: https://developers.reutersconnect.com/authentication
 - type: Blog
   url: https://medium.com/tr-labs-ml-engineering-blog
+- url: https://medium.com/feed/tr-labs-ml-engineering-blog
+  type: BlogRSS
+  description: Discovered RSS/Atom feed for https://medium.com/tr-labs-ml-engineering-blog
 - type: Support
   url: https://www.reuters.com/info-pages/contact-us/
 - type: TermsOfService
