@@ -1,0 +1,769 @@
+"""
+Reuters Connect GraphQL Schema
+Conceptual GraphQL schema representing the Reuters Connect API content model.
+Covers articles, media, search, taxonomy, wire services, and access control.
+"""
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+# -----------------------------------------------------------------------
+# Root types
+# -----------------------------------------------------------------------
+
+type Query {
+  article(id: ID!): Article
+  articles(filter: SearchFilter, page: PageInfo): ArticleResults
+  story(id: ID!): Story
+  media(id: ID!): Media
+  photo(id: ID!): Photo
+  video(id: ID!): Video
+  gallery(id: ID!): Gallery
+  topic(code: String!): Topic
+  topics(language: LanguageCode, limit: Int): [Topic]
+  subject(code: String!): Subject
+  geography(code: String!): Geography
+  person(id: ID!): Person
+  organization(id: ID!): Organization
+  author(id: ID!): Author
+  source(id: ID!): Source
+  wire(id: ID!): Wire
+  wireItems(wireId: ID!, dateRange: DateRange, limit: Int): [WireItem]
+  search(query: SearchQuery): SearchResults
+}
+
+type Mutation {
+  createAPIToken(keyId: ID!, secret: String!): APIToken
+  revokeAPIToken(token: String!): Boolean
+}
+
+# -----------------------------------------------------------------------
+# Article
+# -----------------------------------------------------------------------
+
+"""A single editorial article distributed via Reuters Connect."""
+type Article {
+  id: ID!
+  aid: String
+  type: ArticleType!
+  status: ArticleStatus!
+  headline: Headline
+  slug: StorySlug
+  body: Body
+  details: ArticleDetails
+  media: [Media]
+  topics: [Topic]
+  subjects: [Subject]
+  geographies: [Geography]
+  persons: [Person]
+  organizations: [Organization]
+  author: Author
+  source: Source
+  wire: WireService
+  language: LanguageCode
+  priority: ContentPriority
+  contentType: ContentType
+  license: License
+  distribution: Distribution
+  publishedAt: String
+  updatedAt: String
+  versionNumber: Int
+}
+
+"""Extended metadata for an Article."""
+type ArticleDetails {
+  wordCount: Int
+  characterCount: Int
+  paragraphCount: Int
+  editorialNote: String
+  urgency: Int
+  service: String
+  guid: String
+  originalId: String
+  embargoed: Boolean
+  embargoDate: String
+}
+
+"""Classification type of a Reuters article."""
+enum ArticleType {
+  TEXT
+  ADVISORY
+  CORRECTION
+  RECAP
+  FEATURE
+  ANALYSIS
+  BREAKING
+  BACKGROUND
+}
+
+"""Lifecycle status of an article."""
+enum ArticleStatus {
+  USABLE
+  WITHHELD
+  CANCELLED
+  REPLACED
+  EMBARGOED
+}
+
+# -----------------------------------------------------------------------
+# Headline
+# -----------------------------------------------------------------------
+
+"""A headline for an article or story."""
+type Headline {
+  text: String!
+  priority: HeadlinePriority
+  longHead: String
+  shortHead: String
+  subHead: String
+  catchLine: String
+  language: LanguageCode
+}
+
+"""Priority classification for a headline."""
+enum HeadlinePriority {
+  FLASH
+  URGENT
+  REGULAR
+  ADVANCE
+  ROUTINE
+}
+
+# -----------------------------------------------------------------------
+# Story
+# -----------------------------------------------------------------------
+
+"""A story grouping one or more related articles."""
+type Story {
+  id: ID!
+  slug: StorySlug
+  details: StoryDetails
+  package: StoryPackage
+  articles: [Article]
+  relatedStories: [Story]
+  topics: [Topic]
+  publishedAt: String
+  updatedAt: String
+}
+
+"""Detailed metadata for a story."""
+type StoryDetails {
+  summary: String
+  byline: String
+  dateline: String
+  creditLine: String
+  contentOrigin: String
+  editorNote: String
+}
+
+"""A curated package of stories on a theme."""
+type StoryPackage {
+  id: ID!
+  title: String
+  description: String
+  stories: [Story]
+  lead: Story
+  createdAt: String
+  expiresAt: String
+}
+
+"""URL-safe story identifier."""
+type StorySlug {
+  value: String!
+  canonical: String
+}
+
+# -----------------------------------------------------------------------
+# Body
+# -----------------------------------------------------------------------
+
+"""The full body of an article."""
+type Body {
+  rawHtml: String
+  rawText: String
+  paragraphs: [BodyParagraph]
+  content: [BodyContent]
+}
+
+"""A single paragraph within an article body."""
+type BodyParagraph {
+  index: Int!
+  text: String!
+  role: String
+}
+
+"""A unit of structured content within an article body."""
+type BodyContent {
+  type: String!
+  value: String
+  attributes: String
+}
+
+# -----------------------------------------------------------------------
+# Media (generic)
+# -----------------------------------------------------------------------
+
+"""A generic media asset attached to an article."""
+type Media {
+  id: ID!
+  type: MediaType!
+  details: MediaDetails
+  versions: [MediaVersion]
+  caption: String
+  creditLine: String
+  source: Source
+  language: LanguageCode
+  publishedAt: String
+}
+
+"""Detailed metadata for a media asset."""
+type MediaDetails {
+  originalFilename: String
+  mimeType: String
+  fileSize: Int
+  duration: Int
+  width: Int
+  height: Int
+  aspectRatio: String
+  colorSpace: String
+  editorialNote: String
+}
+
+"""A rendition/version of a media asset."""
+type MediaVersion {
+  id: ID!
+  label: String
+  url: String!
+  mimeType: String
+  width: Int
+  height: Int
+  fileSize: Int
+  bitrate: Int
+}
+
+"""Classification of a media asset."""
+enum MediaType {
+  PHOTO
+  VIDEO
+  GRAPHIC
+  AUDIO
+  DOCUMENT
+  PACKAGE
+}
+
+# -----------------------------------------------------------------------
+# Photo
+# -----------------------------------------------------------------------
+
+"""A photographic asset from Reuters."""
+type Photo {
+  id: ID!
+  details: PhotoDetails
+  caption: PhotoCaption
+  versions: [MediaVersion]
+  topics: [Topic]
+  persons: [Person]
+  photographer: Author
+  source: Source
+  dateTaken: String
+  publishedAt: String
+  license: License
+}
+
+"""Technical and editorial details for a photo."""
+type PhotoDetails {
+  width: Int
+  height: Int
+  colorMode: String
+  orientation: String
+  cameraMake: String
+  cameraModel: String
+  exposureTime: String
+  focalLength: String
+  isoSpeed: Int
+  flashUsed: Boolean
+  originalId: String
+  guid: String
+}
+
+"""Caption data for a photo."""
+type PhotoCaption {
+  text: String!
+  longCaption: String
+  shortCaption: String
+  creditLine: String
+  byline: String
+  dateline: String
+}
+
+# -----------------------------------------------------------------------
+# Video
+# -----------------------------------------------------------------------
+
+"""A video asset from Reuters."""
+type Video {
+  id: ID!
+  details: VideoDetails
+  caption: VideoCaption
+  clips: [VideoClip]
+  topics: [Topic]
+  source: Source
+  publishedAt: String
+  license: License
+}
+
+"""Technical and editorial details for a video."""
+type VideoDetails {
+  duration: Int
+  frameRate: Float
+  aspectRatio: String
+  resolution: String
+  codec: String
+  bitrate: Int
+  originalId: String
+  guid: String
+}
+
+"""Caption data for a video."""
+type VideoCaption {
+  text: String!
+  longCaption: String
+  shortCaption: String
+  creditLine: String
+  byline: String
+  dateline: String
+  language: LanguageCode
+}
+
+"""A discrete clip or segment within a video asset."""
+type VideoClip {
+  id: ID!
+  timecodeIn: String
+  timecodeOut: String
+  description: String
+  url: String
+  mimeType: String
+}
+
+# -----------------------------------------------------------------------
+# Gallery
+# -----------------------------------------------------------------------
+
+"""An editorial photo gallery."""
+type Gallery {
+  id: ID!
+  title: String!
+  description: String
+  photos: [GalleryPhoto]
+  topic: Topic
+  publishedAt: String
+  updatedAt: String
+  source: Source
+}
+
+"""A photo within a gallery with position metadata."""
+type GalleryPhoto {
+  position: Int!
+  photo: Photo!
+  caption: String
+  featured: Boolean
+}
+
+# -----------------------------------------------------------------------
+# Topic / Subject / Geography
+# -----------------------------------------------------------------------
+
+"""A Reuters editorial topic tag."""
+type Topic {
+  code: TopicCode!
+  details: TopicDetails
+  parent: Topic
+  children: [Topic]
+  relatedSubjects: [Subject]
+}
+
+"""Display information for a topic."""
+type TopicDetails {
+  name: String!
+  description: String
+  language: LanguageCode
+  aliases: [String]
+}
+
+"""A topic code used in Reuters taxonomy."""
+type TopicCode {
+  value: String!
+  scheme: String
+}
+
+"""An IPTC or Reuters subject classification."""
+type Subject {
+  code: SubjectCode!
+  name: String!
+  parent: Subject
+  children: [Subject]
+}
+
+"""A subject code in the classification hierarchy."""
+type SubjectCode {
+  value: String!
+  scheme: String
+}
+
+"""A geographic region or location."""
+type Geography {
+  code: GeoCode!
+  details: GeographyDetails
+  type: GeoType!
+  parent: Geography
+  children: [Geography]
+}
+
+"""Display information for a geography."""
+type GeographyDetails {
+  name: String!
+  isoAlpha2: String
+  isoAlpha3: String
+  latitude: Float
+  longitude: Float
+  aliases: [String]
+}
+
+"""A geographic code used in Reuters taxonomy."""
+type GeoCode {
+  value: String!
+  scheme: String
+}
+
+"""Classification of a geographic entity."""
+enum GeoType {
+  WORLD
+  CONTINENT
+  REGION
+  COUNTRY
+  STATE
+  CITY
+  DISTRICT
+  VENUE
+}
+
+# -----------------------------------------------------------------------
+# Person / Organization
+# -----------------------------------------------------------------------
+
+"""A person referenced in Reuters editorial content."""
+type Person {
+  id: ID!
+  details: PersonDetails
+  relatedArticles(limit: Int): [Article]
+}
+
+"""Biographical and identification details for a person."""
+type PersonDetails {
+  firstName: String
+  lastName: String
+  fullName: String!
+  title: String
+  role: String
+  nationality: String
+  description: String
+  aliases: [String]
+}
+
+"""An organization referenced in Reuters editorial content."""
+type Organization {
+  id: ID!
+  details: OrganizationDetails
+  relatedArticles(limit: Int): [Article]
+}
+
+"""Details and identifiers for an organization."""
+type OrganizationDetails {
+  name: String!
+  legalName: String
+  ticker: String
+  exchange: String
+  isin: String
+  sector: String
+  country: String
+  website: String
+  description: String
+}
+
+# -----------------------------------------------------------------------
+# Author / Source
+# -----------------------------------------------------------------------
+
+"""A Reuters or contributing author."""
+type Author {
+  id: ID!
+  details: AuthorDetails
+  bio: AuthorBio
+  articles(limit: Int): [Article]
+}
+
+"""Name and contact information for an author."""
+type AuthorDetails {
+  firstName: String
+  lastName: String
+  displayName: String!
+  email: String
+  twitter: String
+  location: String
+}
+
+"""Editorial biography for an author."""
+type AuthorBio {
+  shortBio: String
+  longBio: String
+  photoUrl: String
+  joinedAt: String
+  specializations: [String]
+}
+
+"""A content source or provider."""
+type Source {
+  id: ID!
+  details: SourceDetails
+}
+
+"""Details for a content source."""
+type SourceDetails {
+  name: String!
+  code: String
+  description: String
+  website: String
+  country: String
+  isTrusted: Boolean
+}
+
+# -----------------------------------------------------------------------
+# Wire Service
+# -----------------------------------------------------------------------
+
+"""A Reuters wire or content channel."""
+type Wire {
+  id: ID!
+  service: WireService!
+  items: [WireItem]
+}
+
+"""Metadata about the Reuters wire service."""
+type WireService {
+  id: ID!
+  name: String!
+  code: String!
+  description: String
+  contentTypes: [MediaType]
+  languages: [LanguageCode]
+  channels: [String]
+}
+
+"""A single item delivered on a wire."""
+type WireItem {
+  id: ID!
+  article: Article
+  media: Media
+  priority: ContentPriority
+  transmittedAt: String
+  sequenceNumber: Int
+  channel: String
+}
+
+# -----------------------------------------------------------------------
+# Search
+# -----------------------------------------------------------------------
+
+"""A structured search request."""
+input SearchQuery {
+  keywords: String
+  topics: [String]
+  subjects: [String]
+  geographies: [String]
+  persons: [String]
+  organizations: [String]
+  authors: [String]
+  sources: [String]
+  mediaTypes: [MediaType]
+  languages: [LanguageCode]
+  dateRange: DateRangeInput
+  filter: SearchFilterInput
+  sort: SortOrder
+  page: PageInfoInput
+}
+
+"""Filters to narrow search results."""
+input SearchFilterInput {
+  contentTypes: [ContentType]
+  priorities: [ContentPriority]
+  wires: [String]
+  channels: [String]
+  embargoed: Boolean
+  licensed: Boolean
+}
+
+"""Output type for search filters applied to results."""
+type SearchFilter {
+  contentTypes: [ContentType]
+  priorities: [ContentPriority]
+  wires: [String]
+  channels: [String]
+  embargoed: Boolean
+  licensed: Boolean
+}
+
+"""The results of a content search."""
+type SearchResults {
+  totalCount: Int!
+  articles: ArticleResults
+  media: [Media]
+  facets: SearchFacets
+  page: PageInfo
+}
+
+"""Aggregated facet counts for a search."""
+type SearchFacets {
+  topics: [FacetBucket]
+  subjects: [FacetBucket]
+  geographies: [FacetBucket]
+  mediaTypes: [FacetBucket]
+  languages: [FacetBucket]
+  sources: [FacetBucket]
+}
+
+"""A single facet bucket with a label and count."""
+type FacetBucket {
+  value: String!
+  label: String
+  count: Int!
+}
+
+"""Paginated list of articles."""
+type ArticleResults {
+  items: [Article]!
+  totalCount: Int!
+  page: PageInfo!
+}
+
+# -----------------------------------------------------------------------
+# Shared / Utility types
+# -----------------------------------------------------------------------
+
+"""An inclusive date range for filtering content."""
+input DateRangeInput {
+  from: String!
+  to: String
+}
+
+"""An inclusive date range (output)."""
+type DateRange {
+  from: String!
+  to: String
+}
+
+"""Pagination parameters."""
+input PageInfoInput {
+  page: Int
+  perPage: Int
+  cursor: String
+}
+
+"""Pagination metadata returned with a result set."""
+type PageInfo {
+  page: Int!
+  perPage: Int!
+  totalPages: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  nextCursor: String
+  previousCursor: String
+}
+
+"""Sort order for search results."""
+enum SortOrder {
+  RELEVANCE
+  NEWEST
+  OLDEST
+  PRIORITY
+}
+
+"""BCP-47 language codes supported by Reuters."""
+enum LanguageCode {
+  EN
+  DE
+  FR
+  ES
+  AR
+  ZH
+  JA
+  PT
+  RU
+  IT
+}
+
+"""Editorial priority levels."""
+enum ContentPriority {
+  FLASH
+  URGENT
+  HIGH
+  NORMAL
+  LOW
+  ADVANCE
+}
+
+"""High-level content type classification."""
+enum ContentType {
+  TEXT
+  PHOTO
+  VIDEO
+  GRAPHIC
+  AUDIO
+  PACKAGE
+  DATA
+}
+
+"""License granted for use of Reuters content."""
+type License {
+  id: ID!
+  name: String!
+  code: String
+  description: String
+  url: String
+  allowsReuse: Boolean
+  allowsModification: Boolean
+  requiresAttribution: Boolean
+  commercial: Boolean
+}
+
+"""Distribution parameters for content delivery."""
+type Distribution {
+  scope: String
+  regions: [String]
+  platforms: [String]
+  maxPublications: Int
+  embargoedUntil: String
+}
+
+# -----------------------------------------------------------------------
+# Auth / API access
+# -----------------------------------------------------------------------
+
+"""A time-limited bearer token for Reuters Connect API."""
+type APIToken {
+  token: String!
+  expiresAt: String!
+  tokenType: String
+  scope: [String]
+}
+
+"""An API key credential for Reuters Connect."""
+type APIKey {
+  id: ID!
+  name: String
+  createdAt: String
+  lastUsedAt: String
+  scopes: [String]
+  active: Boolean
+}
