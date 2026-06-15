@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reuters Connect API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate and Obtain Authorization Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/login",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The Reuters Connect account username for authentication."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "The Reuters Connect account password for authentication."
+              }
+            ]
+          },
+          "docs": "Authenticates with the Reuters Connect service using username and password credentials. Returns an authorization token that must be included in all subsequent API requests. Tokens should be cached and renewed periodically (typically every 3600 seconds). This endpoint uses the commerce.reuters.com authentication server."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Content Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/channels",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authorization token obtained from the /login endpoint."
+              },
+              {
+                "name": "channelCategory",
+                "value": "",
+                "type": "query",
+                "description": "Filter channels by content category. Common categories include TXT (text/stories), PIX (images/photos), VID (video), and GFX (graphics/infographics)."
+              }
+            ]
+          },
+          "docs": "Retrieves all content channels available within your subscription. Channels can be filtered by category to return only specific content types such as text stories, images, video, or graphics. Each channel represents a curated feed of editorial content from Reuters and partner sources."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Items on a Channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/items",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authorization token obtained from the /login endpoint."
+              },
+              {
+                "name": "channel",
+                "value": "",
+                "type": "query",
+                "description": "The channel alias identifying which content channel to retrieve items from."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response."
+              },
+              {
+                "name": "dateRange",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by date range. Specify a date range to restrict results to items published within that period."
+              },
+              {
+                "name": "mediaType",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by media type to restrict to specific content formats."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of content items available on a specific channel. Returns the most recent items on the channel, including metadata such as headlines, timestamps, media types, and identifiers. Items can represent news stories, images, video clips, or graphics depending on the channel category."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Specific Content Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/item",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authorization token obtained from the /login endpoint."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the content item to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details of a specific content item by its unique identifier. The response includes the complete item metadata, content body, and available renditions (for media items). Items may be Simple News Items (SNI), News Event Packages (NEP), or Super News Event Packages (SNEP) for composite content."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for Content Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/search",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authorization token obtained from the /login endpoint."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string. Supports field-specific searches using the format field:value (e.g., headline:election, body:markets). Multiple terms can be combined."
+              },
+              {
+                "name": "channel",
+                "value": "",
+                "type": "query",
+                "description": "Optional channel alias to restrict search results to a specific channel."
+              },
+              {
+                "name": "dateRange",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by date range. Specify a date range to restrict results to items published within that period."
+              },
+              {
+                "name": "mediaType",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by media type to restrict to specific content formats."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for search results."
+              }
+            ]
+          },
+          "docs": "Searches for content items matching specified criteria across one or more channels. Supports keyword queries against item headlines and content, with optional filtering by channel, date range, and media type. The search query syntax supports field-specific searches using the format field:value (e.g., headline:election)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
