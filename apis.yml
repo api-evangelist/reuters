@@ -6,7 +6,7 @@ description: Global news organization providing breaking news, business, financi
   REST API for searching and retrieving editorial content including text, images,
   video, and graphics.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Business
 - Finance
