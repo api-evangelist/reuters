@@ -50,6 +50,12 @@ apis:
   - url: graphql/reuters-graphql.md
     type: GraphQL
 common:
+- type: VulnerabilityDisclosure
+  url: security/reuters-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/reuters-domain-security.yml
+- type: Authentication
+  url: authentication/reuters-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/reuters2
 - type: Documentation

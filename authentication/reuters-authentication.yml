@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/reuters-connect-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: tokenAuth
+  type: apiKey
+  in: query
+  parameter: token
+  description: Authorization token obtained from the /login endpoint. Must be included as a
+    query parameter in all content API requests.
+  sources:
+  - openapi/reuters-connect-api-openapi.yml
