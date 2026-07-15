@@ -50,6 +50,8 @@ apis:
   - url: graphql/reuters-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/reuters-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/reuters-vulnerability-disclosure.yml
 - type: DomainSecurity
