@@ -1,0 +1,224 @@
+openapi: 3.1.0
+info:
+  title: Reuters Connect Authentication Search API
+  description: Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.
+  version: 1.0.0
+  contact:
+    name: Reuters API Support
+    url: https://www.reutersconnect.com/contact
+    email: api.support@thomsonreuters.com
+  license:
+    name: Reuters Terms of Use
+    url: https://www.reuters.com/info-pages/terms-of-use/
+  termsOfService: https://www.reuters.com/info-pages/terms-of-use/
+servers:
+- url: https://rmb.reuters.com/rmd/rest/xml
+  description: Reuters Connect Content Delivery Server
+- url: https://commerce.reuters.com/rmd/rest/xml
+  description: Reuters Connect Authentication Server
+security:
+- tokenAuth: []
+tags:
+- name: Search
+  description: Search for content items across channels using keyword queries. Search supports filtering by headline, channel, date range, and other metadata fields.
+paths:
+  /search:
+    get:
+      operationId: searchItems
+      summary: Search for Content Items
+      description: Searches for content items matching specified criteria across one or more channels. Supports keyword queries against item headlines and content, with optional filtering by channel, date range, and media type. The search query syntax supports field-specific searches using the format field:value (e.g., headline:election).
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - $ref: '#/components/parameters/searchQuery'
+      - $ref: '#/components/parameters/channelOptional'
+      - $ref: '#/components/parameters/dateRange'
+      - $ref: '#/components/parameters/mediaType'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/sortOrder'
+      responses:
+        '200':
+          description: Search results matching the specified criteria.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  parameters:
+    searchQuery:
+      name: q
+      in: query
+      required: true
+      description: Search query string. Supports field-specific searches using the format field:value (e.g., headline:election, body:markets). Multiple terms can be combined.
+      schema:
+        type: string
+      examples:
+        headlineSearch:
+          value: headline:election
+          summary: Search for items with election in the headline.
+    mediaType:
+      name: mediaType
+      in: query
+      required: false
+      description: Filter results by media type to restrict to specific content formats.
+      schema:
+        type: string
+        enum:
+        - TEXT
+        - PICTURE
+        - VIDEO
+        - GRAPHIC
+        - COMPOSITE
+    channelOptional:
+      name: channel
+      in: query
+      required: false
+      description: Optional channel alias to restrict search results to a specific channel.
+      schema:
+        type: string
+    token:
+      name: token
+      in: query
+      required: true
+      description: Authorization token obtained from the /login endpoint.
+      schema:
+        type: string
+    dateRange:
+      name: dateRange
+      in: query
+      required: false
+      description: Filter results by date range. Specify a date range to restrict results to items published within that period.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in the response.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 25
+    sortOrder:
+      name: sort
+      in: query
+      required: false
+      description: Sort order for search results.
+      schema:
+        type: string
+        enum:
+        - date
+        - relevance
+        default: date
+  schemas:
+    SearchResponse:
+      type: object
+      description: Response containing search results with matching content items.
+      properties:
+        results:
+          type: array
+          description: Array of items matching the search criteria.
+          items:
+            $ref: '#/components/schemas/ItemSummary'
+        totalResults:
+          type: integer
+          description: Total number of items matching the search criteria.
+        query:
+          type: string
+          description: The search query that was executed.
+      xml:
+        name: searchResults
+    ItemSummary:
+      type: object
+      description: A summary representation of a content item, containing key metadata without the full content body.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the item, typically in URN or tag URI format.
+        guid:
+          type: string
+          description: A globally unique identifier for the item regardless of version.
+        version:
+          type: string
+          description: The version number of this item revision.
+        headline:
+          type: string
+          description: The headline or title of the content item.
+        dateCreated:
+          type: string
+          format: date-time
+          description: The date and time when the item was originally created.
+        dateModified:
+          type: string
+          format: date-time
+          description: The date and time when the item was last modified.
+        channel:
+          type: string
+          description: The alias of the channel this item belongs to.
+        mediaType:
+          type: string
+          description: The media type of the content (TEXT, PICTURE, VIDEO, GRAPHIC).
+          enum:
+          - TEXT
+          - PICTURE
+          - VIDEO
+          - GRAPHIC
+          - COMPOSITE
+        slug:
+          type: string
+          description: A short keyword slug summarizing the item topic.
+      xml:
+        name: item
+    Error:
+      type: object
+      description: An error response from the Reuters Connect API.
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message describing the issue.
+      xml:
+        name: error
+  responses:
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or contains invalid parameters. Check the query parameters and try again.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: Authorization token obtained from the /login endpoint. Must be included as a query parameter in all content API requests.

@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Reuters Connect Authentication Channels API
+  description: Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.
+  version: 1.0.0
+  contact:
+    name: Reuters API Support
+    url: https://www.reutersconnect.com/contact
+    email: api.support@thomsonreuters.com
+  license:
+    name: Reuters Terms of Use
+    url: https://www.reuters.com/info-pages/terms-of-use/
+  termsOfService: https://www.reuters.com/info-pages/terms-of-use/
+servers:
+- url: https://rmb.reuters.com/rmd/rest/xml
+  description: Reuters Connect Content Delivery Server
+- url: https://commerce.reuters.com/rmd/rest/xml
+  description: Reuters Connect Authentication Server
+security:
+- tokenAuth: []
+tags:
+- name: Channels
+  description: Retrieve available content channels within your subscription. Channels are organized by category including text (TXT), images (PIX), video (VID), and graphics (GFX).
+paths:
+  /channels:
+    get:
+      operationId: listChannels
+      summary: List Available Content Channels
+      description: Retrieves all content channels available within your subscription. Channels can be filtered by category to return only specific content types such as text stories, images, video, or graphics. Each channel represents a curated feed of editorial content from Reuters and partner sources.
+      tags:
+      - Channels
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - $ref: '#/components/parameters/channelCategory'
+      responses:
+        '200':
+          description: A list of channels matching the specified criteria.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChannelListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ChannelListResponse:
+      type: object
+      description: Response containing a list of available channels.
+      properties:
+        channels:
+          type: array
+          description: Array of channel objects.
+          items:
+            $ref: '#/components/schemas/Channel'
+      xml:
+        name: channelList
+    Channel:
+      type: object
+      description: A content channel representing a curated feed of editorial content. Channels are organized by category and subscription level.
+      properties:
+        alias:
+          type: string
+          description: The unique alias identifier for the channel.
+        description:
+          type: string
+          description: A human-readable description of the channel content.
+        category:
+          type: string
+          description: The content category of the channel (e.g., TXT, PIX, VID, GFX).
+          enum:
+          - TXT
+          - PIX
+          - VID
+          - GFX
+          - CMP
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The timestamp when the channel was last updated with new content.
+      xml:
+        name: channel
+    Error:
+      type: object
+      description: An error response from the Reuters Connect API.
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message describing the issue.
+      xml:
+        name: error
+  parameters:
+    token:
+      name: token
+      in: query
+      required: true
+      description: Authorization token obtained from the /login endpoint.
+      schema:
+        type: string
+    channelCategory:
+      name: channelCategory
+      in: query
+      required: false
+      description: Filter channels by content category. Common categories include TXT (text/stories), PIX (images/photos), VID (video), and GFX (graphics/infographics).
+      schema:
+        type: string
+        enum:
+        - TXT
+        - PIX
+        - VID
+        - GFX
+        - CMP
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: Authorization token obtained from the /login endpoint. Must be included as a query parameter in all content API requests.
