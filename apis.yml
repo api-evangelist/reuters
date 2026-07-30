@@ -6,7 +6,20 @@ description: Global news organization providing breaking news, business, financi
   REST API for searching and retrieving editorial content including text, images,
   video, and graphics.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/reuters.png
 tags:
 - Business
 - Finance
@@ -19,36 +32,110 @@ created: '2024-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: reuters:reuters-connect-api
-  name: Reuters Connect API
-  description: Professional content delivery platform providing access to news, images,
-    video, and data from Reuters and partner content sources via REST API, powering
-    over 100 customer applications and internal systems. Content is organized into
-    channels by category (TXT, PIX, VID, GFX) and items can be retrieved individually
-    or searched by keyword.
+- aid: reuters:reuters-authentication-api
+  name: Reuters Authentication API
+  description: >-
+    Authenticate with Reuters Connect to obtain an authorization token. Tokens are required for all content
+    API calls and should be cached and renewed periodically.
   humanURL: https://www.reutersconnect.com
   tags:
-  - Content Delivery
-  - Images
-  - Media
-  - News
-  - Search
-  - Video
+  - Authentication
   properties:
+  - type: OpenAPI
+    url: openapi/reuters-authentication-api-openapi.yml
   - type: Documentation
     url: https://developers.reutersconnect.com/docs
   - type: Authentication
     url: https://developers.reutersconnect.com/authentication
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/openapi/reuters-connect-api-openapi.yml
   - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json
   - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json
   - type: JSONLD
-    url: https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
-  - url: graphql/reuters-graphql.md
-    type: GraphQL
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
+  - type: GraphQL
+    url: graphql/reuters-graphql.md
+- aid: reuters:reuters-channels-api
+  name: Reuters Channels API
+  description: >-
+    Retrieve available content channels within your subscription. Channels are organized by category including
+    text (TXT), images (PIX), video (VID), and graphics (GFX).
+  humanURL: https://www.reutersconnect.com
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/reuters-channels-api-openapi.yml
+  - type: Documentation
+    url: https://developers.reutersconnect.com/docs
+  - type: Authentication
+    url: https://developers.reutersconnect.com/authentication
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
+  - type: GraphQL
+    url: graphql/reuters-graphql.md
+- aid: reuters:reuters-items-api
+  name: Reuters Items API
+  description: >-
+    Retrieve content items from specific channels. Items represent individual pieces of editorial content
+    such as news stories, images, video clips, or graphics.
+  humanURL: https://www.reutersconnect.com
+  tags:
+  - Items
+  properties:
+  - type: OpenAPI
+    url: openapi/reuters-items-api-openapi.yml
+  - type: Documentation
+    url: https://developers.reutersconnect.com/docs
+  - type: Authentication
+    url: https://developers.reutersconnect.com/authentication
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
+  - type: GraphQL
+    url: graphql/reuters-graphql.md
+- aid: reuters:reuters-search-api
+  name: Reuters Search API
+  description: >-
+    Search for content items across channels using keyword queries. Search supports filtering by headline,
+    channel, date range, and other metadata fields.
+  humanURL: https://www.reutersconnect.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/reuters-search-api-openapi.yml
+  - type: Documentation
+    url: https://developers.reutersconnect.com/docs
+  - type: Authentication
+    url: https://developers.reutersconnect.com/authentication
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
+  - type: GraphQL
+    url: graphql/reuters-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/reuters-agentic-access.yml
