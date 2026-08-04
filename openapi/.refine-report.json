@@ -1,0 +1,20 @@
+{
+  "provider": "reuters",
+  "sources": [
+    "reuters-authentication-api-openapi.yml",
+    "reuters-channels-api-openapi.yml",
+    "reuters-items-api-openapi.yml",
+    "reuters-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "reuters-authentication-api-openapi.yml",
+    "reuters-channels-api-openapi.yml",
+    "reuters-items-api-openapi.yml",
+    "reuters-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
