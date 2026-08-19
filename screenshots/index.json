@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "reuters",
+    "captured_at": "2026-08-17T125210",
+    "source_url": "https://www.reuters.com",
+    "source_type": "Website",
+    "file": "reuters-2026-08-17T125210.png",
+    "bytes": 36608,
+    "capture": "playwright-local"
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reuters Connect Authentication API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate and Obtain Authorization Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/login",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The Reuters Connect account username for authentication."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "The Reuters Connect account password for authentication."
+              }
+            ]
+          },
+          "docs": "Authenticates with the Reuters Connect service using username and password credentials. Returns an authorization token that must be included in all subsequent API requests. Tokens should be cached and renewed periodically (typically every 3600 seconds). This endpoint uses the commerce.reuters.com authentication server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

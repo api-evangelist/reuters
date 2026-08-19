@@ -1,0 +1,319 @@
+{
+  "item": [
+    {
+      "id": "cf497d4d-0f55-4748-ae67-d9af881567f5",
+      "name": "Authentication",
+      "description": {
+        "content": "Authenticate with Reuters Connect to obtain an authorization token. Tokens are required for all content API calls and should be cached and renewed periodically.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec5b3f60-c867-435c-a098-ba44dcb86ad1",
+          "name": "Authenticate and Obtain Authorization Token",
+          "request": {
+            "name": "Authenticate and Obtain Authorization Token",
+            "description": {
+              "content": "Authenticates with the Reuters Connect service using username and password credentials. Returns an authorization token that must be included in all subsequent API requests. Tokens should be cached and renewed periodically (typically every 3600 seconds). This endpoint uses the commerce.reuters.com authentication server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "rmd",
+                "rest",
+                "xml",
+                "login"
+              ],
+              "host": [
+                "commerce",
+                "reuters",
+                "com"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) The Reuters Connect account username for authentication."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) The Reuters Connect account password for authentication."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e25de493-1afc-4368-b9b6-3cc5a25963c6",
+              "name": "Successfully authenticated. Returns an authorization token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "rmd",
+                    "rest",
+                    "xml",
+                    "login"
+                  ],
+                  "host": [
+                    "commerce",
+                    "reuters",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<authToken>\n  <authToken>(string)</authToken>\n</authToken>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "31a58071-ebba-484a-b1e7-f64bf3f307ef",
+              "name": "Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "rmd",
+                    "rest",
+                    "xml",
+                    "login"
+                  ],
+                  "host": [
+                    "commerce",
+                    "reuters",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "3a90a72d-ad95-4d28-9416-80950cb36525",
+              "name": "Access denied. Your subscription does not include access to the requested resource or channel.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "rmd",
+                    "rest",
+                    "xml",
+                    "login"
+                  ],
+                  "host": [
+                    "commerce",
+                    "reuters",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "f37c0a75-092e-4f20-ab1e-4534b6446c1e",
+              "name": "An internal server error occurred. Try the request again later or contact Reuters API support.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "rmd",
+                    "rest",
+                    "xml",
+                    "login"
+                  ],
+                  "host": [
+                    "commerce",
+                    "reuters",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rmb.reuters.com/rmd/rest/xml",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "994ad061-cddf-444e-9a85-84d8daef013e",
+    "name": "Reuters Connect Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.\n\nContact Support:\n Name: Reuters API Support\n Email: api.support@thomsonreuters.com",
+      "type": "text/plain"
+    }
+  }
+}

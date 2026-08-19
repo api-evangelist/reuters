@@ -1,0 +1,703 @@
+{
+  "item": [
+    {
+      "id": "544dc188-fa1a-45ff-bcc5-154cb794ec95",
+      "name": "Items",
+      "description": {
+        "content": "Retrieve content items from specific channels. Items represent individual pieces of editorial content such as news stories, images, video clips, or graphics.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0dd0a4b1-c3fd-4360-8159-63efeb169eae",
+          "name": "List Items on a Channel",
+          "request": {
+            "name": "List Items on a Channel",
+            "description": {
+              "content": "Retrieves a list of content items available on a specific channel. Returns the most recent items on the channel, including metadata such as headlines, timestamps, media types, and identifiers. Items can represent news stories, images, video clips, or graphics depending on the channel category.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Authorization token obtained from the /login endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "channel",
+                  "value": "<string>",
+                  "description": "(Required) The channel alias identifying which content channel to retrieve items from."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum number of items to return in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateRange",
+                  "value": "<string>",
+                  "description": "Filter results by date range. Specify a date range to restrict results to items published within that period."
+                },
+                {
+                  "disabled": false,
+                  "key": "mediaType",
+                  "value": "<string>",
+                  "description": "Filter results by media type to restrict to specific content formats."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c03cf983-fd8a-4b1e-8ca8-4d784215aab4",
+              "name": "A list of items from the specified channel.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "OLDEN"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<results>\n  <item>\n    <id>(string)</id>\n    <guid>(string)</guid>\n    <version>(string)</version>\n    <headline>(string)</headline>\n    <dateCreated>(string)</dateCreated>\n    <dateModified>(string)</dateModified>\n    <channel>(string)</channel>\n    <mediaType>(string)</mediaType>\n    <slug>(string)</slug>\n  </item>\n  <item>\n    <id>(string)</id>\n    <guid>(string)</guid>\n    <version>(string)</version>\n    <headline>(string)</headline>\n    <dateCreated>(string)</dateCreated>\n    <dateModified>(string)</dateModified>\n    <channel>(string)</channel>\n    <mediaType>(string)</mediaType>\n    <slug>(string)</slug>\n  </item>\n  <totalResults>(integer)</totalResults>\n</results>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "17b03d68-4910-45f6-a474-a68239426451",
+              "name": "Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "OLDEN"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "56f43d9d-d316-4e4b-a3a5-50e38c76dd43",
+              "name": "Access denied. Your subscription does not include access to the requested resource or channel.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "OLDEN"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "5f15738f-2dc9-4e0f-9973-adc60c59425c",
+              "name": "The requested resource was not found. The item ID or channel alias may be incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "OLDEN"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "3ba4ae7f-a70a-4d76-b279-86a30885d1b1",
+              "name": "An internal server error occurred. Try the request again later or contact Reuters API support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "OLDEN"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "367709bd-8374-4cd0-94ec-48494d1eb969",
+          "name": "Retrieve a Specific Content Item",
+          "request": {
+            "name": "Retrieve a Specific Content Item",
+            "description": {
+              "content": "Retrieves the full details of a specific content item by its unique identifier. The response includes the complete item metadata, content body, and available renditions (for media items). Items may be Simple News Items (SNI), News Event Packages (NEP), or Super News Event Packages (SNEP) for composite content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "item"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Authorization token obtained from the /login endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the content item to retrieve."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b0b6185-b72d-4349-b83c-2808bd6db961",
+              "name": "The full details of the requested content item.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "item"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<item>\n  <id>(string)</id>\n  <guid>(string)</guid>\n  <version>(string)</version>\n  <headline>(string)</headline>\n  <dateCreated>(string)</dateCreated>\n  <dateModified>(string)</dateModified>\n  <channel>(string)</channel>\n  <slug>(string)</slug>\n  <mediaType>(string)</mediaType>\n  <urgency>(integer)</urgency>\n  <byline>(string)</byline>\n  <dateline>(string)</dateline>\n  <language>(string)</language>\n  <body>(string)</body>\n  <subject>\n    <code>(string)</code>\n    <name>(string)</name>\n  </subject>\n  <subject>\n    <code>(string)</code>\n    <name>(string)</name>\n  </subject>\n  <rendition>\n    <name>(string)</name>\n    <href>(string)</href>\n    <mimetype>(string)</mimetype>\n    <width>(integer)</width>\n    <height>(integer)</height>\n    <sizeinbytes>(integer)</sizeinbytes>\n  </rendition>\n  <rendition>\n    <name>(string)</name>\n    <href>(string)</href>\n    <mimetype>(string)</mimetype>\n    <width>(integer)</width>\n    <height>(integer)</height>\n    <sizeinbytes>(integer)</sizeinbytes>\n  </rendition>\n  <association>\n    <id>(string)</id>\n    <type>(string)</type>\n    <headline>(string)</headline>\n    <mediaType>(string)</mediaType>\n  </association>\n  <association>\n    <id>(string)</id>\n    <type>(string)</type>\n    <headline>(string)</headline>\n    <mediaType>(string)</mediaType>\n  </association>\n</item>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "cd9b553f-db84-4db6-b0bc-d84258c8be18",
+              "name": "Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "item"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "ad8c17ea-c7ae-4d6b-810e-1849fffca7f0",
+              "name": "Access denied. Your subscription does not include access to the requested resource or channel.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "item"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "813930bf-3c59-47cd-b6a8-f01d928722b8",
+              "name": "The requested resource was not found. The item ID or channel alias may be incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "item"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "3844b981-c5c3-4b99-baeb-37251c5013df",
+              "name": "An internal server error occurred. Try the request again later or contact Reuters API support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "item"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "tag:reuters.com,2025:newsml_L1N3KT0AB:1"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error>\n  <code>(string)</code>\n  <message>(string)</message>\n</error>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rmb.reuters.com/rmd/rest/xml",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f397af1d-00f3-4204-a5d8-f64621c74953",
+    "name": "Reuters Connect Authentication Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.\n\nContact Support:\n Name: Reuters API Support\n Email: api.support@thomsonreuters.com",
+      "type": "text/plain"
+    }
+  }
+}

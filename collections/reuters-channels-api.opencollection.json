@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reuters Connect Authentication Channels API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Content Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rmb.reuters.com/rmd/rest/xml/channels",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Authorization token obtained from the /login endpoint."
+              },
+              {
+                "name": "channelCategory",
+                "value": "",
+                "type": "query",
+                "description": "Filter channels by content category. Common categories include TXT (text/stories), PIX (images/photos), VID (video), and GFX (graphics/infographics)."
+              }
+            ]
+          },
+          "docs": "Retrieves all content channels available within your subscription. Channels can be filtered by category to return only specific content types such as text stories, images, video, or graphics. Each channel represents a curated feed of editorial content from Reuters and partner sources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
