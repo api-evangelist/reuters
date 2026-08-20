@@ -91,6 +91,8 @@ apis:
     such as news stories, images, video clips, or graphics.
   humanURL: https://www.reutersconnect.com
   tags:
+  - Item
+  tags_raw:
   - Items
   properties:
   - type: OpenAPI
