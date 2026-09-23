@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Reuters Connect Authentication Channels API
+  title: Reuters Connect Channels API
   description: Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.
   version: 1.0.0
   contact:
@@ -47,12 +47,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
       content:
@@ -65,18 +59,13 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    ChannelListResponse:
-      type: object
-      description: Response containing a list of available channels.
-      properties:
-        channels:
-          type: array
-          description: Array of channel objects.
-          items:
-            $ref: '#/components/schemas/Channel'
-      xml:
-        name: channelList
     Channel:
       type: object
       description: A content channel representing a curated feed of editorial content. Channels are organized by category and subscription level.
@@ -114,6 +103,17 @@ components:
           description: A human-readable error message describing the issue.
       xml:
         name: error
+    ChannelListResponse:
+      type: object
+      description: Response containing a list of available channels.
+      properties:
+        channels:
+          type: array
+          description: Array of channel objects.
+          items:
+            $ref: '#/components/schemas/Channel'
+      xml:
+        name: channelList
   parameters:
     token:
       name: token

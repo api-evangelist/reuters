@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Reuters Connect Authentication Items API
+  title: Reuters Connect Items API
   description: Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.
   version: 1.0.0
   contact:
@@ -76,46 +76,92 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found. The item ID or channel alias may be incorrect.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    itemId:
+      name: id
+      in: query
+      required: true
+      description: The unique identifier of the content item to retrieve.
+      schema:
+        type: string
+      examples:
+        sampleId:
+          value: tag:reuters.com,2025:newsml_L1N3KT0AB:1
+          summary: A sample Reuters item identifier.
+    mediaType:
+      name: mediaType
+      in: query
+      required: false
+      description: Filter results by media type to restrict to specific content formats.
+      schema:
+        type: string
+        enum:
+        - TEXT
+        - PICTURE
+        - VIDEO
+        - GRAPHIC
+        - COMPOSITE
+    token:
+      name: token
+      in: query
+      required: true
+      description: Authorization token obtained from the /login endpoint.
+      schema:
+        type: string
+    dateRange:
+      name: dateRange
+      in: query
+      required: false
+      description: Filter results by date range. Specify a date range to restrict results to items published within that period.
+      schema:
+        type: string
+    channel:
+      name: channel
+      in: query
+      required: true
+      description: The channel alias identifying which content channel to retrieve items from.
+      schema:
+        type: string
+      examples:
+        textChannel:
+          value: OLDEN
+          summary: A sample text news channel alias.
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in the response.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 25
   schemas:
-    Rendition:
-      type: object
-      description: A specific rendition or format of a media item. Renditions represent different sizes, resolutions, or formats of the same content available for download.
-      properties:
-        name:
-          type: string
-          description: The name or label of the rendition (e.g., thumbnail, preview, baseImage, videoFile).
-        href:
-          type: string
-          format: uri
-          description: The URL to download this rendition of the content.
-        mimetype:
-          type: string
-          description: The MIME type of the rendition file (e.g., image/jpeg, video/mp4).
-        width:
-          type: integer
-          description: The width of the rendition in pixels (for images and video).
-        height:
-          type: integer
-          description: The height of the rendition in pixels (for images and video).
-        sizeinbytes:
-          type: integer
-          description: The file size of the rendition in bytes.
-      xml:
-        name: rendition
-    ItemListResponse:
-      type: object
-      description: Response containing a list of content items.
-      properties:
-        results:
-          type: array
-          description: Array of content item summaries.
-          items:
-            $ref: '#/components/schemas/ItemSummary'
-        totalResults:
-          type: integer
-          description: Total number of items available on the channel.
-      xml:
-        name: results
     Association:
       type: object
       description: A reference to an associated content item, linking related pieces of editorial content together.
@@ -134,6 +180,32 @@ components:
           description: The media type of the associated item.
       xml:
         name: association
+    Subject:
+      type: object
+      description: A subject classification code from the IPTC NewsCodes taxonomy.
+      properties:
+        code:
+          type: string
+          description: The IPTC subject code.
+        name:
+          type: string
+          description: The human-readable name of the subject category.
+      xml:
+        name: subject
+    ItemListResponse:
+      type: object
+      description: Response containing a list of content items.
+      properties:
+        results:
+          type: array
+          description: Array of content item summaries.
+          items:
+            $ref: '#/components/schemas/ItemSummary'
+        totalResults:
+          type: integer
+          description: Total number of items available on the channel.
+      xml:
+        name: results
     ItemSummary:
       type: object
       description: A summary representation of a content item, containing key metadata without the full content body.
@@ -175,18 +247,31 @@ components:
           description: A short keyword slug summarizing the item topic.
       xml:
         name: item
-    Subject:
+    Rendition:
       type: object
-      description: A subject classification code from the IPTC NewsCodes taxonomy.
+      description: A specific rendition or format of a media item. Renditions represent different sizes, resolutions, or formats of the same content available for download.
       properties:
-        code:
-          type: string
-          description: The IPTC subject code.
         name:
           type: string
-          description: The human-readable name of the subject category.
+          description: The name or label of the rendition (e.g., thumbnail, preview, baseImage, videoFile).
+        href:
+          type: string
+          format: uri
+          description: The URL to download this rendition of the content.
+        mimetype:
+          type: string
+          description: The MIME type of the rendition file (e.g., image/jpeg, video/mp4).
+        width:
+          type: integer
+          description: The width of the rendition in pixels (for images and video).
+        height:
+          type: integer
+          description: The height of the rendition in pixels (for images and video).
+        sizeinbytes:
+          type: integer
+          description: The file size of the rendition in bytes.
       xml:
-        name: subject
+        name: rendition
     Error:
       type: object
       description: An error response from the Reuters Connect API.
@@ -272,91 +357,6 @@ components:
             $ref: '#/components/schemas/Association'
       xml:
         name: item
-  parameters:
-    channel:
-      name: channel
-      in: query
-      required: true
-      description: The channel alias identifying which content channel to retrieve items from.
-      schema:
-        type: string
-      examples:
-        textChannel:
-          value: OLDEN
-          summary: A sample text news channel alias.
-    mediaType:
-      name: mediaType
-      in: query
-      required: false
-      description: Filter results by media type to restrict to specific content formats.
-      schema:
-        type: string
-        enum:
-        - TEXT
-        - PICTURE
-        - VIDEO
-        - GRAPHIC
-        - COMPOSITE
-    itemId:
-      name: id
-      in: query
-      required: true
-      description: The unique identifier of the content item to retrieve.
-      schema:
-        type: string
-      examples:
-        sampleId:
-          value: tag:reuters.com,2025:newsml_L1N3KT0AB:1
-          summary: A sample Reuters item identifier.
-    token:
-      name: token
-      in: query
-      required: true
-      description: Authorization token obtained from the /login endpoint.
-      schema:
-        type: string
-    dateRange:
-      name: dateRange
-      in: query
-      required: false
-      description: Filter results by date range. Specify a date range to restrict results to items published within that period.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in the response.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 500
-        default: 25
-  responses:
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found. The item ID or channel alias may be incorrect.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Access denied. Your subscription does not include access to the requested resource or channel.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

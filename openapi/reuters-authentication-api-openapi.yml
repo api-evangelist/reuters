@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Reuters Connect Authentication API
   description: Reuters Connect Web Services is the professional content delivery platform providing REST API access to news, images, video, and data from Reuters and partner content sources. The API enables searching and retrieving editorial content with great specificity and speed, powering over 100 customer applications and internal systems. Content is organized into channels by category (text, images, video, graphics) and items can be retrieved individually or searched by keyword within channels.
@@ -49,51 +49,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  schemas:
-    AuthTokenResponse:
-      type: object
-      description: Authentication response containing the authorization token.
-      properties:
-        authToken:
-          type: string
-          description: The authorization token to use for subsequent API requests. Should be cached and renewed periodically.
-      xml:
-        name: authToken
-    Error:
-      type: object
-      description: An error response from the Reuters Connect API.
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code.
-        message:
-          type: string
-          description: A human-readable error message describing the issue.
-      xml:
-        name: error
-  parameters:
-    username:
-      name: username
-      in: query
-      required: true
-      description: The Reuters Connect account username for authentication.
-      schema:
-        type: string
-    password:
-      name: password
-      in: query
-      required: true
-      description: The Reuters Connect account password for authentication.
-      schema:
-        type: string
-        format: password
   responses:
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
       content:
@@ -106,6 +62,50 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: An error response from the Reuters Connect API.
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message describing the issue.
+      xml:
+        name: error
+    AuthTokenResponse:
+      type: object
+      description: Authentication response containing the authorization token.
+      properties:
+        authToken:
+          type: string
+          description: The authorization token to use for subsequent API requests. Should be cached and renewed periodically.
+      xml:
+        name: authToken
+  parameters:
+    password:
+      name: password
+      in: query
+      required: true
+      description: The Reuters Connect account password for authentication.
+      schema:
+        type: string
+        format: password
+    username:
+      name: username
+      in: query
+      required: true
+      description: The Reuters Connect account username for authentication.
+      schema:
+        type: string
   securitySchemes:
     tokenAuth:
       type: apiKey
