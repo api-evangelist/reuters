@@ -69,8 +69,6 @@ apis:
   - type: JSONLD
     url: >-
       https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
-  - type: GraphQL
-    url: graphql/reuters-graphql.md
 - aid: reuters:reuters-channels-api
   name: Reuters Channels API
   description: >-
@@ -95,8 +93,6 @@ apis:
   - type: JSONLD
     url: >-
       https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
-  - type: GraphQL
-    url: graphql/reuters-graphql.md
 - aid: reuters:reuters-items-api
   name: Reuters Items API
   description: >-
@@ -123,8 +119,6 @@ apis:
   - type: JSONLD
     url: >-
       https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
-  - type: GraphQL
-    url: graphql/reuters-graphql.md
 - aid: reuters:reuters-search-api
   name: Reuters Search API
   description: >-
@@ -149,8 +143,6 @@ apis:
   - type: JSONLD
     url: >-
       https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
-  - type: GraphQL
-    url: graphql/reuters-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/reuters-agentic-access.yml
