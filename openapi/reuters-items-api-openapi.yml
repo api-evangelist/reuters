@@ -76,202 +76,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Access denied. Your subscription does not include access to the requested resource or channel.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found. The item ID or channel alias may be incorrect.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    itemId:
-      name: id
-      in: query
-      required: true
-      description: The unique identifier of the content item to retrieve.
-      schema:
-        type: string
-      examples:
-        sampleId:
-          value: tag:reuters.com,2025:newsml_L1N3KT0AB:1
-          summary: A sample Reuters item identifier.
-    mediaType:
-      name: mediaType
-      in: query
-      required: false
-      description: Filter results by media type to restrict to specific content formats.
-      schema:
-        type: string
-        enum:
-        - TEXT
-        - PICTURE
-        - VIDEO
-        - GRAPHIC
-        - COMPOSITE
-    token:
-      name: token
-      in: query
-      required: true
-      description: Authorization token obtained from the /login endpoint.
-      schema:
-        type: string
-    dateRange:
-      name: dateRange
-      in: query
-      required: false
-      description: Filter results by date range. Specify a date range to restrict results to items published within that period.
-      schema:
-        type: string
-    channel:
-      name: channel
-      in: query
-      required: true
-      description: The channel alias identifying which content channel to retrieve items from.
-      schema:
-        type: string
-      examples:
-        textChannel:
-          value: OLDEN
-          summary: A sample text news channel alias.
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in the response.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 500
-        default: 25
   schemas:
-    Association:
-      type: object
-      description: A reference to an associated content item, linking related pieces of editorial content together.
-      properties:
-        id:
-          type: string
-          description: The unique identifier of the associated item.
-        type:
-          type: string
-          description: The type of association (e.g., companion, related, seeAlso).
-        headline:
-          type: string
-          description: The headline of the associated item.
-        mediaType:
-          type: string
-          description: The media type of the associated item.
-      xml:
-        name: association
-    Subject:
-      type: object
-      description: A subject classification code from the IPTC NewsCodes taxonomy.
-      properties:
-        code:
-          type: string
-          description: The IPTC subject code.
-        name:
-          type: string
-          description: The human-readable name of the subject category.
-      xml:
-        name: subject
-    ItemListResponse:
-      type: object
-      description: Response containing a list of content items.
-      properties:
-        results:
-          type: array
-          description: Array of content item summaries.
-          items:
-            $ref: '#/components/schemas/ItemSummary'
-        totalResults:
-          type: integer
-          description: Total number of items available on the channel.
-      xml:
-        name: results
-    ItemSummary:
-      type: object
-      description: A summary representation of a content item, containing key metadata without the full content body.
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the item, typically in URN or tag URI format.
-        guid:
-          type: string
-          description: A globally unique identifier for the item regardless of version.
-        version:
-          type: string
-          description: The version number of this item revision.
-        headline:
-          type: string
-          description: The headline or title of the content item.
-        dateCreated:
-          type: string
-          format: date-time
-          description: The date and time when the item was originally created.
-        dateModified:
-          type: string
-          format: date-time
-          description: The date and time when the item was last modified.
-        channel:
-          type: string
-          description: The alias of the channel this item belongs to.
-        mediaType:
-          type: string
-          description: The media type of the content (TEXT, PICTURE, VIDEO, GRAPHIC).
-          enum:
-          - TEXT
-          - PICTURE
-          - VIDEO
-          - GRAPHIC
-          - COMPOSITE
-        slug:
-          type: string
-          description: A short keyword slug summarizing the item topic.
-      xml:
-        name: item
-    Rendition:
-      type: object
-      description: A specific rendition or format of a media item. Renditions represent different sizes, resolutions, or formats of the same content available for download.
-      properties:
-        name:
-          type: string
-          description: The name or label of the rendition (e.g., thumbnail, preview, baseImage, videoFile).
-        href:
-          type: string
-          format: uri
-          description: The URL to download this rendition of the content.
-        mimetype:
-          type: string
-          description: The MIME type of the rendition file (e.g., image/jpeg, video/mp4).
-        width:
-          type: integer
-          description: The width of the rendition in pixels (for images and video).
-        height:
-          type: integer
-          description: The height of the rendition in pixels (for images and video).
-        sizeinbytes:
-          type: integer
-          description: The file size of the rendition in bytes.
-      xml:
-        name: rendition
     Error:
       type: object
       description: An error response from the Reuters Connect API.
@@ -357,6 +162,201 @@ components:
             $ref: '#/components/schemas/Association'
       xml:
         name: item
+    ItemSummary:
+      type: object
+      description: A summary representation of a content item, containing key metadata without the full content body.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the item, typically in URN or tag URI format.
+        guid:
+          type: string
+          description: A globally unique identifier for the item regardless of version.
+        version:
+          type: string
+          description: The version number of this item revision.
+        headline:
+          type: string
+          description: The headline or title of the content item.
+        dateCreated:
+          type: string
+          format: date-time
+          description: The date and time when the item was originally created.
+        dateModified:
+          type: string
+          format: date-time
+          description: The date and time when the item was last modified.
+        channel:
+          type: string
+          description: The alias of the channel this item belongs to.
+        mediaType:
+          type: string
+          description: The media type of the content (TEXT, PICTURE, VIDEO, GRAPHIC).
+          enum:
+          - TEXT
+          - PICTURE
+          - VIDEO
+          - GRAPHIC
+          - COMPOSITE
+        slug:
+          type: string
+          description: A short keyword slug summarizing the item topic.
+      xml:
+        name: item
+    Association:
+      type: object
+      description: A reference to an associated content item, linking related pieces of editorial content together.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the associated item.
+        type:
+          type: string
+          description: The type of association (e.g., companion, related, seeAlso).
+        headline:
+          type: string
+          description: The headline of the associated item.
+        mediaType:
+          type: string
+          description: The media type of the associated item.
+      xml:
+        name: association
+    Rendition:
+      type: object
+      description: A specific rendition or format of a media item. Renditions represent different sizes, resolutions, or formats of the same content available for download.
+      properties:
+        name:
+          type: string
+          description: The name or label of the rendition (e.g., thumbnail, preview, baseImage, videoFile).
+        href:
+          type: string
+          format: uri
+          description: The URL to download this rendition of the content.
+        mimetype:
+          type: string
+          description: The MIME type of the rendition file (e.g., image/jpeg, video/mp4).
+        width:
+          type: integer
+          description: The width of the rendition in pixels (for images and video).
+        height:
+          type: integer
+          description: The height of the rendition in pixels (for images and video).
+        sizeinbytes:
+          type: integer
+          description: The file size of the rendition in bytes.
+      xml:
+        name: rendition
+    ItemListResponse:
+      type: object
+      description: Response containing a list of content items.
+      properties:
+        results:
+          type: array
+          description: Array of content item summaries.
+          items:
+            $ref: '#/components/schemas/ItemSummary'
+        totalResults:
+          type: integer
+          description: Total number of items available on the channel.
+      xml:
+        name: results
+    Subject:
+      type: object
+      description: A subject classification code from the IPTC NewsCodes taxonomy.
+      properties:
+        code:
+          type: string
+          description: The IPTC subject code.
+        name:
+          type: string
+          description: The human-readable name of the subject category.
+      xml:
+        name: subject
+  parameters:
+    channel:
+      name: channel
+      in: query
+      required: true
+      description: The channel alias identifying which content channel to retrieve items from.
+      schema:
+        type: string
+      examples:
+        textChannel:
+          value: OLDEN
+          summary: A sample text news channel alias.
+    token:
+      name: token
+      in: query
+      required: true
+      description: Authorization token obtained from the /login endpoint.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in the response.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 25
+    itemId:
+      name: id
+      in: query
+      required: true
+      description: The unique identifier of the content item to retrieve.
+      schema:
+        type: string
+      examples:
+        sampleId:
+          value: tag:reuters.com,2025:newsml_L1N3KT0AB:1
+          summary: A sample Reuters item identifier.
+    mediaType:
+      name: mediaType
+      in: query
+      required: false
+      description: Filter results by media type to restrict to specific content formats.
+      schema:
+        type: string
+        enum:
+        - TEXT
+        - PICTURE
+        - VIDEO
+        - GRAPHIC
+        - COMPOSITE
+    dateRange:
+      name: dateRange
+      in: query
+      required: false
+      description: Filter results by date range. Specify a date range to restrict results to items published within that period.
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found. The item ID or channel alias may be incorrect.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

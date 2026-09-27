@@ -46,26 +46,19 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Access denied. Your subscription does not include access to the requested resource or channel.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: An error response from the Reuters Connect API.
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message describing the issue.
+      xml:
+        name: error
     Channel:
       type: object
       description: A content channel representing a curated feed of editorial content. Channels are organized by category and subscription level.
@@ -91,18 +84,6 @@ components:
           description: The timestamp when the channel was last updated with new content.
       xml:
         name: channel
-    Error:
-      type: object
-      description: An error response from the Reuters Connect API.
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code.
-        message:
-          type: string
-          description: A human-readable error message describing the issue.
-      xml:
-        name: error
     ChannelListResponse:
       type: object
       description: Response containing a list of available channels.
@@ -135,6 +116,25 @@ components:
         - VID
         - GFX
         - CMP
+  responses:
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey
