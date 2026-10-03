@@ -49,6 +49,41 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  parameters:
+    username:
+      name: username
+      in: query
+      required: true
+      description: The Reuters Connect account username for authentication.
+      schema:
+        type: string
+    password:
+      name: password
+      in: query
+      required: true
+      description: The Reuters Connect account password for authentication.
+      schema:
+        type: string
+        format: password
+  responses:
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -71,41 +106,6 @@ components:
           description: The authorization token to use for subsequent API requests. Should be cached and renewed periodically.
       xml:
         name: authToken
-  parameters:
-    username:
-      name: username
-      in: query
-      required: true
-      description: The Reuters Connect account username for authentication.
-      schema:
-        type: string
-    password:
-      name: password
-      in: query
-      required: true
-      description: The Reuters Connect account password for authentication.
-      schema:
-        type: string
-        format: password
-  responses:
-    Forbidden:
-      description: Access denied. Your subscription does not include access to the requested resource or channel.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey
