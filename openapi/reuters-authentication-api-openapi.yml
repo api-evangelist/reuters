@@ -50,13 +50,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
-    username:
-      name: username
-      in: query
-      required: true
-      description: The Reuters Connect account username for authentication.
-      schema:
-        type: string
     password:
       name: password
       in: query
@@ -65,9 +58,16 @@ components:
       schema:
         type: string
         format: password
+    username:
+      name: username
+      in: query
+      required: true
+      description: The Reuters Connect account username for authentication.
+      schema:
+        type: string
   responses:
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
       content:
         application/xml:
           schema:
@@ -78,8 +78,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
       content:
         application/xml:
           schema:
