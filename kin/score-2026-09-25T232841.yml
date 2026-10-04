@@ -1,21 +1,19 @@
-# Kin Score artifact — reuters — 2026-08-24T171257
+# Kin Score artifact — reuters — 2026-09-25T232841
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: reuters
-  schema_version: 0.13.0
-  scored_at: '2026-08-24'
-  run_ts: 2026-08-24T171257
-  composite: 44.0
+  schema_version: 0.23.0
+  scored_at: '2026-09-25'
+  run_ts: 2026-09-25T232841
+  composite: 41.2
   band: developing
   facets:
-    discoverability: 64.8
-    contract_quality: 73.3
-    governance: 69.7
+    discoverability: 57.1
+    contract_quality: 63.7
+    contract_governance: 62.7
     operational_transparency: 10.5
     developer_ergonomics: 15.5
-    commercial_clarity: 31.6
-    contract_governance: 69.7
     access_clarity: 31.6
   agent_readiness:
     score: 19.8
@@ -40,6 +38,12 @@ kin_score:
       protected_resource_metadata: false
       dynamic_client_registration: false
       agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Horizontal (data, software, accessibility, platform)
+    regime_id: horizontal
+    score: 28.4
+    matched_via: fallback
   provenance:
     agentic_access: derived
     contracts:
