@@ -144,6 +144,12 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld
 common:
+- type: Plans
+  url: plans/reuters-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/reuters-rate-limits.yml
+- type: FinOps
+  url: finops/reuters-finops.yml
 - type: AgenticAccess
   url: agentic-access/reuters-agentic-access.yml
 - type: VulnerabilityDisclosure
