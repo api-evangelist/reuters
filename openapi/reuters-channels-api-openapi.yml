@@ -46,46 +46,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: An internal server error occurred. Try the request again later or contact Reuters API support.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Access denied. Your subscription does not include access to the requested resource or channel.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    channelCategory:
-      name: channelCategory
-      in: query
-      required: false
-      description: Filter channels by content category. Common categories include TXT (text/stories), PIX (images/photos), VID (video), and GFX (graphics/infographics).
-      schema:
-        type: string
-        enum:
-        - TXT
-        - PIX
-        - VID
-        - GFX
-        - CMP
-    token:
-      name: token
-      in: query
-      required: true
-      description: Authorization token obtained from the /login endpoint.
-      schema:
-        type: string
   schemas:
     Error:
       type: object
@@ -135,6 +95,46 @@ components:
           description: The timestamp when the channel was last updated with new content.
       xml:
         name: channel
+  parameters:
+    channelCategory:
+      name: channelCategory
+      in: query
+      required: false
+      description: Filter channels by content category. Common categories include TXT (text/stories), PIX (images/photos), VID (video), and GFX (graphics/infographics).
+      schema:
+        type: string
+        enum:
+        - TXT
+        - PIX
+        - VID
+        - GFX
+        - CMP
+    token:
+      name: token
+      in: query
+      required: true
+      description: Authorization token obtained from the /login endpoint.
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Access denied. Your subscription does not include access to the requested resource or channel.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: An internal server error occurred. Try the request again later or contact Reuters API support.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

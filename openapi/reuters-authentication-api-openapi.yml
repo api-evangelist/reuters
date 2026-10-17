@@ -49,6 +49,28 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  schemas:
+    AuthTokenResponse:
+      type: object
+      description: Authentication response containing the authorization token.
+      properties:
+        authToken:
+          type: string
+          description: The authorization token to use for subsequent API requests. Should be cached and renewed periodically.
+      xml:
+        name: authToken
+    Error:
+      type: object
+      description: An error response from the Reuters Connect API.
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message describing the issue.
+      xml:
+        name: error
   parameters:
     password:
       name: password
@@ -66,12 +88,6 @@ components:
       schema:
         type: string
   responses:
-    Unauthorized:
-      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
-      content:
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Access denied. Your subscription does not include access to the requested resource or channel.
       content:
@@ -84,28 +100,12 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      description: An error response from the Reuters Connect API.
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code.
-        message:
-          type: string
-          description: A human-readable error message describing the issue.
-      xml:
-        name: error
-    AuthTokenResponse:
-      type: object
-      description: Authentication response containing the authorization token.
-      properties:
-        authToken:
-          type: string
-          description: The authorization token to use for subsequent API requests. Should be cached and renewed periodically.
-      xml:
-        name: authToken
+    Unauthorized:
+      description: Authentication failed. The token is missing, expired, or invalid. Obtain a new token from the /login endpoint.
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey
