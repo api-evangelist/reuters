@@ -1,0 +1,51 @@
+edges:
+- partner_name: DPP (Digital Production Partnership)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.thedpp.com/members-directory
+  category: media supply-chain industry body
+  contract_reference:
+    register: DPP members directory (thedpp.com/members-directory)
+    standard: DPP
+    spec_file: null
+    role: dpp-member
+    registered_name: Reuters
+    register_id: https://www.thedpp.com/members-directory
+    matched_domain: reuters.com
+    matched_by: domain
+    signal_note: 'participation only: a listing on the register, never counted'
+    detected_by: sweep-film-media-identifiers-eidr.py
+    detected: '2026-10-21'
+    dpp_category: content-provider
+  detected_by: sweep-film-media-identifiers-eidr.py
+  first_seen: '2026-10-21'
+generated: '2026-10-21'
+method: searched
+source:
+- https://www.eidr.org/eidr-participants
+- https://movielabs.com/about/
+- https://www.thedpp.com/members-directory
+- https://www.thedpp.com/security
+- https://web.isan.org/public/en/sign-up
+- https://www.eidr.org/members/
+- https://members.eidr.org/
+- https://www.ttpn.org/
+- https://plus.ttpn.org/
+- https://movielabs.com/about-industry-forum/
+- https://movielabs.com/2030showcase/
+checked:
+- https://members.eidr.org/
+- https://movielabs.com/2030showcase/
+- https://movielabs.com/about-industry-forum/
+- https://movielabs.com/about/
+- https://plus.ttpn.org/
+- https://web.isan.org/public/en/sign-up
+- https://www.eidr.org/eidr-participants
+- https://www.eidr.org/members/
+- https://www.thedpp.com/members-directory
+- https://www.thedpp.com/security
+- https://www.ttpn.org/
