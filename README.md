@@ -1,4 +1,4 @@
-# Reuters (reuters)
+# Reuters
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,70 +66,174 @@
 
 Global news organization providing breaking news, business, financial, and multimedia content through wire services, digital platforms, and content APIs serving media organizations worldwide. Reuters Connect Web Services provides a professional REST API for searching and retrieving editorial content including text, images, video, and graphics.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/apis.yml)
+**Areas:** Business · Finance · Journalism · Media · News · Wire Service
 
-## Scope
+## Reuters on APIs.io
 
-- **Type:** Index
+Everything profiled for Reuters is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/reuters/](https://apis.io/providers/reuters/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (4)
 
-- Business
-- Finance
-- Journalism
-- Media
-- News
-- Wire Service
+- [Reuters Authentication API](https://apis.io/apis/reuters/reuters-authentication-api/) — Authenticate with Reuters Connect to obtain an authorization token. Tokens are required for all content API calls and should be cached and renewed periodically.
+- [Reuters Channels API](https://apis.io/apis/reuters/reuters-channels-api/) — Retrieve available content channels within your subscription. Channels are organized by category including text (TXT), images (PIX), video (VID), and…
+- [Reuters Items API](https://apis.io/apis/reuters/reuters-items-api/) — Retrieve content items from specific channels. Items represent individual pieces of editorial content such as news stories, images, video clips, or graphics.
+- [Reuters Search API](https://apis.io/apis/reuters/reuters-search-api/) — Search for content items across channels using keyword queries. Search supports filtering by headline, channel, date range, and other metadata fields.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### GraphQL (1)
 
-### Reuters Connect API
+GraphQL schemas.
 
-Professional content delivery platform providing access to news, images, video, and data from Reuters and partner content sources via REST API, powering over 100 customer applications and internal systems. Content is organized into channels by category (TXT, PIX, VID, GFX) and items can be retrieved individually or searched by keyword.
+- [Moved to /providers/reuters/](https://apis.io/graphqls/reuters/reuters-graphql/)
 
-- **Human URL:** [https://www.reutersconnect.com](https://www.reutersconnect.com)
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Content Delivery
-- Images
-- Media
-- News
-- Search
-- Video
+- [Reuters Agentic Access](https://apis.io/agentic-access/reuters/reuters-agentic-access/)
 
-#### Properties
+#### JSON Schema (4)
 
-- [Documentation](https://developers.reutersconnect.com/docs)
-- [Authentication](https://developers.reutersconnect.com/authentication)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/openapi/reuters-connect-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-channel-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-schema/reuters-item-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/json-ld/reuters-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Postman Collection](collections/reuters-connect-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/reuters-connect-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The data models the API reads and writes.
 
-## Common Properties
+- [Reuters Connect Channel](https://apis.io/schemas/reuters/reuters-channel/)
+- [Reuters Connect Content Item](https://apis.io/schemas/reuters/reuters-item/)
+- [Reuters Connect Rendition](https://apis.io/schemas/reuters/reuters-rendition/)
+- [Reuters Connect Search Result](https://apis.io/schemas/reuters/reuters-search-result/)
 
-- [LinkedIn](https://www.linkedin.com/company/reuters2)
-- [Documentation](https://developers.reutersconnect.com/docs)
-- [Authentication](https://developers.reutersconnect.com/authentication)
-- [Blog](https://medium.com/tr-labs-ml-engineering-blog)
-- [Blog R S S](https://medium.com/feed/tr-labs-ml-engineering-blog)
-- [Support](https://www.reuters.com/info-pages/contact-us/)
-- [Terms of Service](https://www.reuters.com/info-pages/terms-of-use/)
-- [Privacy Policy](https://www.thomsonreuters.com/en/privacy-statement.html)
-- [GitHub Organization](https://github.com/ReutersMedia)
+#### JSON Structure (1)
+
+Data models expressed in JSON Structure.
+
+- [Reuters Connect Api Structure](https://apis.io/json-structure/reuters/reuters-connect-api-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Reuters Context](https://apis.io/jsonld/reuters/reuters-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Reuters Vocabulary](https://apis.io/vocabularies/reuters/reuters-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Reuters Authenticate Example](https://apis.io/examples/reuters/reuters-authenticate-example/)
+- [Reuters List Channels Example](https://apis.io/examples/reuters/reuters-list-channels-example/)
+- [Reuters Search Items Example](https://apis.io/examples/reuters/reuters-search-items-example/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Reuters Connect Authentication API](https://apis.io/collections/reuters/open-reuters-authentication-api/)
+- [Reuters Connect Authentication Channels API](https://apis.io/collections/reuters/open-reuters-channels-api/)
+- [Reuters Connect API](https://apis.io/collections/reuters/open-reuters-connect-api/)
+- [Reuters Connect Authentication Items API](https://apis.io/collections/reuters/open-reuters-items-api/)
+- [Reuters Connect Authentication Search API](https://apis.io/collections/reuters/open-reuters-search-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Reuters — connect api rules](https://apis.io/rules/reuters/reuters-connect-api-rules/)
+- [Reuters — jsonschema rules](https://apis.io/rules/reuters/reuters-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Reuters Authentication](https://apis.io/security/reuters/reuters-authentication/)
+- [Reuters Domain Security](https://apis.io/security/reuters/reuters-domain-security/)
+- [Reuters Vulnerability Disclosure](https://apis.io/security/reuters/reuters-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Reuters Plans Pricing](https://apis.io/plans/reuters/reuters-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Reuters Rate Limits](https://apis.io/rate-limits/reuters/reuters-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Reuters Finops](https://apis.io/finops/reuters/reuters-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.reuters.com)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/openapi/reuters-connect-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/reuters/refs/heads/main/vocabulary/reuters-vocabulary.yml)
+- [Documentation](https://developers.reutersconnect.com/docs)
+- [Support](https://www.reuters.com/info-pages/contact-us/)
+- [Blog](https://medium.com/tr-labs-ml-engineering-blog)
+- [Terms of service](https://www.reuters.com/info-pages/terms-of-use/)
+- [Privacy policy](https://www.thomsonreuters.com/en/privacy-statement.html)
+- [GitHub](https://github.com/ReutersMedia)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 35.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 63.7 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 15.5 |
+| Access clarity | 23.7 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 28.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/reuters/](https://apis.io/providers/reuters/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Reuters: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/reuters/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
